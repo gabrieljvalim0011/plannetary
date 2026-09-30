@@ -71,7 +71,11 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
   const hostRef = useRef(null);
   const selectedRef = useRef(selectedId);
   const dragRef = useRef({ active: false, moved: false, pointerId: null, lastX: 0, lastY: 0 });
-
+  const zoomCameraRef = useRef(null);
+  const zoomBoundsRef = useRef({ min: 2.7, max: 15, initial: 7.55 });
+  const zoomPointersRef = useRef(new Map());
+  const pinchRef = useRef({ active: false, startDistance: 0, startCameraDistance: 0 });
+  
   useEffect(() => {
     selectedRef.current = selectedId;
   }, [selectedId]);
@@ -101,6 +105,9 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
       const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 30);
       camera.position.set(0, 4.45, 7.55);
       camera.lookAt(0, 0, 0);
+      const initialCameraDistance = camera.position.length();
+      zoomBoundsRef.current = { min: 2.7, max: initialCameraDistance * 1.95, initial: initialCameraDistance };
+      zoomCameraRef.current = camera;
 
       const root = new THREE.Group();
       root.rotation.x = THREE.MathUtils.degToRad(-5);
@@ -223,40 +230,96 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
 
       const drag = dragRef.current;
 
+      const clampZoomDistance = (distance) => {
+        const bounds = zoomBoundsRef.current;
+        return Math.min(bounds.max, Math.max(bounds.min, distance));
+      };
+
+      const setCameraDistance = (distance) => {
+        const currentCamera = zoomCameraRef.current;
+        if (!currentCamera) return;
+        const nextDistance = clampZoomDistance(distance);
+        const direction = currentCamera.position.clone().normalize();
+        currentCamera.position.copy(direction.multiplyScalar(nextDistance));
+        currentCamera.lookAt(0, 0, 0);
+      };
+
+      const getZoomPointerDistance = () => {
+        const pointers = Array.from(zoomPointersRef.current.values());
+        if (pointers.length < 2) return 0;
+        return Math.hypot(pointers[1].x - pointers[0].x, pointers[1].y - pointers[0].y);
+      };
+
+      const onWheel = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setCameraDistance(camera.position.length() + (event.deltaY > 0 ? 0.55 : -0.55));
+      };
+
+
       const onPointerDown = (event) => {
         if (event.button != null && event.button !== 0) return;
+        zoomPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        canvas.setPointerCapture?.(event.pointerId);
+
+        if (zoomPointersRef.current.size === 2) {
+          drag.active = false;
+          pinchRef.current = {
+            active: true,
+            startDistance: getZoomPointerDistance(),
+            startCameraDistance: camera.position.length(),
+          };
+          return;
+        }
+
         drag.active = true;
         drag.moved = false;
         drag.pointerId = event.pointerId;
         drag.lastX = event.clientX;
         drag.lastY = event.clientY;
-        canvas.setPointerCapture?.(event.pointerId);
         canvas.style.cursor = 'grabbing';
       };
 
       const onPointerMove = (event) => {
+        if (!zoomPointersRef.current.has(event.pointerId)) return;
+        zoomPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+        if (zoomPointersRef.current.size >= 2 && pinchRef.current.active) {
+          const startDistance = pinchRef.current.startDistance;
+          const currentDistance = getZoomPointerDistance();
+          if (!startDistance || !currentDistance) return;
+          setCameraDistance(pinchRef.current.startCameraDistance * (startDistance / currentDistance));
+          return;
+        }
+
         if (!drag.active || drag.pointerId !== event.pointerId) return;
         const dx = event.clientX - drag.lastX;
         const dy = event.clientY - drag.lastY;
         drag.lastX = event.clientX;
         drag.lastY = event.clientY;
-
         if (Math.abs(dx) + Math.abs(dy) > 2) drag.moved = true;
-
         root.rotation.y += dx * 0.008;
-        root.rotation.x = THREE.MathUtils.clamp(root.rotation.x + dy * 0.005, THREE.MathUtils.degToRad(-34), THREE.MathUtils.degToRad(26));
+        root.rotation.x = THREE.MathUtils.clamp(
+          root.rotation.x + dy * 0.005,
+          THREE.MathUtils.degToRad(-34),
+          THREE.MathUtils.degToRad(26),
+        );
       };
 
       const onPointerUp = (event) => {
-        if (drag.pointerId !== event.pointerId) return;
-
+        const wasSinglePointer = zoomPointersRef.current.size === 1 && zoomPointersRef.current.has(event.pointerId);
         const wasDragged = drag.moved;
+
+        zoomPointersRef.current.delete(event.pointerId);
+        if (zoomPointersRef.current.size < 2) pinchRef.current.active = false;
+
+        if (drag.pointerId !== event.pointerId) return;
         drag.active = false;
         drag.pointerId = null;
         canvas.style.cursor = 'grab';
         canvas.releasePointerCapture?.(event.pointerId);
 
-        if (wasDragged) return;
+        if (!wasSinglePointer || wasDragged) return;
 
         const rect = canvas.getBoundingClientRect();
         const pointer = new THREE.Vector2(
@@ -270,6 +333,8 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
       };
 
       const onPointerCancel = (event) => {
+        zoomPointersRef.current.delete(event.pointerId);
+        pinchRef.current.active = false;
         if (drag.pointerId !== event.pointerId) return;
         drag.active = false;
         drag.moved = false;
@@ -277,6 +342,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         canvas.style.cursor = 'grab';
       };
 
+      canvas.addEventListener('wheel', onWheel, { passive: false });
       canvas.addEventListener('pointerdown', onPointerDown);
       canvas.addEventListener('pointermove', onPointerMove);
       canvas.addEventListener('pointerup', onPointerUp);
@@ -297,6 +363,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         stopRender();
         observer.disconnect();
         document.removeEventListener('visibilitychange', onVisibilityChange);
+        canvas.removeEventListener('wheel', onWheel);
         canvas.removeEventListener('pointerdown', onPointerDown);
         canvas.removeEventListener('pointermove', onPointerMove);
         canvas.removeEventListener('pointerup', onPointerUp);
@@ -324,5 +391,38 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
 
   if (!satellites.length) return null;
 
-  return <div ref={hostRef} className="planet-satellites-3d" role="img" aria-label={`Visualização 3D esquemática das luas de ${planet.name}`} />;
+  return (
+    <div className="planet-satellites-3d-wrap">
+      <div ref={hostRef} className="planet-satellites-3d" role="img" aria-label={`Visualização 3D esquemática das luas de ${planet.name}`} />
+      <div className="planet-satellites-zoom-controls" aria-label="Controles de zoom das luas">
+        <button type="button" onClick={() => {
+          const currentCamera = zoomCameraRef.current;
+          const bounds = zoomBoundsRef.current;
+          if (!currentCamera) return;
+          const direction = currentCamera.position.clone().normalize();
+          const next = Math.max(bounds.min, currentCamera.position.length() - .8);
+          currentCamera.position.copy(direction.multiplyScalar(next));
+          currentCamera.lookAt(0, 0, 0);
+        }} aria-label="Aproximar luas">+</button>
+        <button type="button" onClick={() => {
+          const currentCamera = zoomCameraRef.current;
+          const bounds = zoomBoundsRef.current;
+          if (!currentCamera) return;
+          const direction = currentCamera.position.clone().normalize();
+          const next = Math.min(bounds.max, currentCamera.position.length() + .8);
+          currentCamera.position.copy(direction.multiplyScalar(next));
+          currentCamera.lookAt(0, 0, 0);
+        }} aria-label="Afastar luas">−</button>
+        <button type="button" onClick={() => {
+          const currentCamera = zoomCameraRef.current;
+          const bounds = zoomBoundsRef.current;
+          if (!currentCamera) return;
+          const direction = currentCamera.position.clone().normalize();
+          currentCamera.position.copy(direction.multiplyScalar(bounds.initial));
+          currentCamera.lookAt(0, 0, 0);
+        }} aria-label="Restaurar zoom das luas">100%</button>
+      </div>
+      <span className="planet-satellites-zoom-hint">PINÇA · + / − · ARRASTE</span>
+    </div>
+  );
 }
