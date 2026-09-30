@@ -1,0 +1,277 @@
+.planet-3d-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: min(63vw, 870px);
+  height: min(63vw, 760px);
+  min-width: 520px;
+  min-height: 520px;
+  z-index: 2;
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+.planet-3d-stage canvas,
+.moon-3d-webgl canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  outline: none;
+  touch-action: none;
+}
+.planet-3d-stage::before {
+  content: '';
+  position: absolute;
+  inset: 18% 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--planet-glow), transparent 66%);
+  opacity: .48;
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: -1;
+}
+.planet-3d-hint {
+  position: absolute;
+  right: 9%;
+  bottom: 11%;
+  color: rgba(255,255,255,.28);
+  font-size: .52rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .24s ease, transform .24s ease;
+}
+.planet-3d-stage:hover .planet-3d-hint,
+.planet-3d-stage:focus-within .planet-3d-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+.planet-3d-fallback,
+.planet-3d-fallback-inline {
+  width: min(61vw, 830px);
+  height: min(61vw, 830px);
+  object-fit: contain;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: saturate(1.04) contrast(1.06) drop-shadow(0 30px 70px rgba(0,0,0,.35));
+}
+.planet-3d-fallback-inline {
+  position: absolute;
+  left: 4%;
+  top: 4%;
+  z-index: 2;
+}
+.moon-3d {
+  position: relative;
+  width: var(--moon-size);
+  height: var(--moon-size);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+.moon-3d-webgl {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.moon-3d-webgl::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,198,232,.18), transparent 70%);
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: -1;
+}
+.moon-3d-fallback-sphere {
+  position: relative;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255,255,255,.18), transparent 25%),
+    radial-gradient(circle at 55% 60%, rgba(10,10,13,.18), transparent 55%),
+    radial-gradient(circle at 50% 45%, #a6a6a6, #5d5e61 74%, #1a1c20 100%);
+  box-shadow: 0 0 55px rgba(151,177,225,.18);
+}
+.moon-3d-fallback-sphere.phase-new { background: #090a0e; box-shadow: none; }
+.moon-3d-fallback-sphere.phase-crescent { background: radial-gradient(circle at 74% 50%, #9b9c9e 0 25%, #15171b 45%, #08090c 70%); }
+.moon-3d-fallback-sphere.phase-quarter { background: linear-gradient(90deg, #111317 0 48%, #a1a2a4 50% 100%); }
+.moon-3d-fallback-sphere.phase-gibbous { background: radial-gradient(circle at 62% 50%, #9e9fa1 0 46%, #191b20 70%); }
+.moon-3d-fallback-sphere.phase-waning-gibbous { background: radial-gradient(circle at 38% 50%, #9e9fa1 0 46%, #191b20 70%); }
+.moon-3d-fallback-sphere.phase-waning-quarter { background: linear-gradient(90deg, #a1a2a4 0 48%, #111317 50% 100%); }
+.moon-3d-fallback-sphere.phase-waning-crescent { background: radial-gradient(circle at 26% 50%, #9b9c9e 0 25%, #15171b 45%, #08090c 70%); }
+
+@media (max-width: 1100px) {
+  .planet-3d-stage { width: min(66vw, 720px); height: min(66vw, 680px); min-width: 440px; min-height: 440px; }
+}
+@media (max-width: 860px) {
+  .planet-3d-stage {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(96vw, 680px);
+    height: min(96vw, 680px);
+    min-width: 0;
+    min-height: 0;
+    margin: -10px auto 0;
+  }
+  .planet-3d-hint { right: 50%; transform: translateX(50%) translateY(4px); bottom: 8%; white-space: nowrap; }
+  .planet-3d-stage:hover .planet-3d-hint { transform: translateX(50%) translateY(0); }
+  .planet-3d-fallback-inline { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .moon-3d { width: var(--moon-size); height: var(--moon-size); }
+}
+
+.planet-experience-hero-media .planet-3d-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+.planet-experience-hero-media .planet-3d-hint {
+  right: 10%;
+  bottom: 8%;
+}
+.planet-experience-hero-media .planet-3d-fallback,
+.planet-experience-hero-media .planet-3d-fallback-inline {
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: contain;
+}
+
+
+/* 2.0: a iluminação do próprio modelo 3D assume o papel dos halos 2D pesados. */
+.planet-scene .planet-haze {
+  animation: none !important;
+  filter: blur(20px) !important;
+  opacity: .48 !important;
+}
+.planet-scene .planet-horizon {
+  filter: blur(12px) !important;
+  opacity: .18 !important;
+}
+.planet-experience-planet::after {
+  pointer-events: none;
+}
+.planet-experience-hero-media .planet-3d-stage::before {
+  opacity: .24;
+  filter: blur(20px);
+}
+
+/* Plannetary 2.0.3 — sistema de satélites naturais e enquadramento 3D refinado. */
+.planet-satellites-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr);
+  gap:16px;
+  margin-top:18px;
+}
+.planet-satellites-stage {
+  min-height:300px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  background:radial-gradient(circle at 50% 48%, rgba(104,137,193,.08), rgba(255,255,255,.012) 58%, transparent 76%);
+  overflow:hidden;
+}
+.planet-satellites-3d {
+  width:100%;
+  height:300px;
+  cursor:grab;
+}
+.planet-satellites-3d:active { cursor:grabbing; }
+.planet-satellites-list {
+  display:grid;
+  align-content:start;
+  gap:7px;
+}
+.planet-satellites-list button {
+  display:grid;
+  grid-template-columns:12px 1fr;
+  gap:10px;
+  align-items:center;
+  width:100%;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  background:rgba(255,255,255,.018);
+  color:rgba(255,255,255,.66);
+  text-align:left;
+  cursor:pointer;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease;
+}
+.planet-satellites-list button:hover,
+.planet-satellites-list button.is-active {
+  color:#fff;
+  border-color:rgba(255,255,255,.13);
+  background:rgba(255,255,255,.035);
+}
+.planet-satellite-dot {
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  box-shadow:0 0 12px rgba(255,255,255,.12);
+}
+.planet-satellites-list button strong { display:block; font-size:.74rem; }
+.planet-satellites-list button small { display:block; margin-top:3px; color:rgba(255,255,255,.3); font-size:.52rem; }
+.planet-satellite-detail {
+  margin-top:3px;
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.planet-satellite-detail span { display:block; color:var(--planet-accent); font-size:.48rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+.planet-satellite-detail strong { display:block; margin-top:5px; font-size:.9rem; }
+.planet-satellite-detail small { display:block; margin-top:5px; color:rgba(255,255,255,.36); font-size:.56rem; line-height:1.45; }
+.planet-satellites-list > a { display:inline-flex; margin-top:5px; color:rgba(255,255,255,.58); font-size:.58rem; font-weight:800; text-decoration:none; }
+.planet-satellites-list > a:hover { color:#fff; }
+.planet-experience-satellite-count { flex:0 0 auto; max-width:220px; padding-top:4px; color:rgba(255,255,255,.38); font-size:.56rem; text-align:right; }
+.satellite-3d-loading { height:300px; display:grid; place-items:center; color:rgba(255,255,255,.35); font-size:.58rem; letter-spacing:.09em; text-transform:uppercase; }
+.planet-no-satellites {
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  gap:14px;
+  align-items:center;
+  min-height:160px;
+  margin-top:18px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  background:rgba(255,255,255,.012);
+}
+.planet-no-satellites-orbit {
+  width:70px;
+  height:70px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:50%;
+  position:relative;
+}
+.planet-no-satellites-orbit::after {
+  content:'';
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:rgba(255,255,255,.7);
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+.planet-no-satellites strong { display:block; font-size:.84rem; }
+.planet-no-satellites p { margin-top:5px; font-size:.62rem; }
+.planet-no-satellites a { color:rgba(255,255,255,.58); font-size:.58rem; font-weight:800; text-decoration:none; }
+.planet-no-satellites a:hover { color:#fff; }
+@media (max-width: 760px) {
+  .planet-satellites-layout { grid-template-columns:1fr; }
+  .planet-satellites-stage { min-height:250px; }
+  .planet-satellites-3d { height:250px; }
+  .planet-experience-satellite-count { max-width:none; text-align:left; }
+  .planet-no-satellites { grid-template-columns:1fr; }
+  .planet-no-satellites-orbit { width:58px; height:58px; }
+}
