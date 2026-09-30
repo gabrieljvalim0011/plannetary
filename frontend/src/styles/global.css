@@ -6464,3 +6464,57 @@ select,
     transition: none !important;
   }
 }
+
+
+/* Plannetary 2.0.17 — centralização absoluta da imagem no zoom das missões. */
+.mission-image-lightbox-frame {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  padding: 0 !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+.mission-image-lightbox-frame > img {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 90px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: contain !important;
+}
+
+.mission-image-lightbox-caption {
+  left: 50% !important;
+  right: auto !important;
+  bottom: 0 !important;
+  width: min(100vw - 32px, 1100px) !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 860px) {
+  .mission-image-lightbox-frame {
+    width: 100vw !important;
+    height: 100dvh !important;
+  }
+
+  .mission-image-lightbox-frame > img {
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100dvh - 76px) !important;
+  }
+
+  .mission-image-lightbox-caption {
+    width: calc(100vw - 24px) !important;
+  }
+}
