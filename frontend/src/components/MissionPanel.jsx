@@ -50,11 +50,51 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
 
   useEffect(() => {
     if (!zoomOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const previousOverscroll = document.body.style.overscrollBehavior;
+    const previousHtmlTouchAction = document.documentElement.style.touchAction;
+    const previousBodyTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.touchAction = 'none';
+    document.body.style.touchAction = 'none';
+
     function handleKeyDown(event) {
       if (event.key === 'Escape') setZoomOpen(false);
+      if (event.key === '+' || event.key === '=') {
+        event.preventDefault();
+        setZoomScale((current) => Math.min(4, current + .5));
+      }
+      if (event.key === '-' || event.key === '_') {
+        event.preventDefault();
+        setZoomScale((current) => {
+          const next = Math.max(1, current - .5);
+          if (next <= 1) setZoomOffset({ x: 0, y: 0 });
+          return next;
+        });
+      }
+      if (event.key === '0') {
+        event.preventDefault();
+        resetZoom();
+      }
     }
+
+    function handleTouchMove(event) {
+      if (event.target?.closest('.mission-image-lightbox')) event.preventDefault();
+    }
+
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.body.style.overflow = previousOverflow;
+      document.body.style.overscrollBehavior = previousOverscroll;
+      document.documentElement.style.touchAction = previousHtmlTouchAction;
+      document.body.style.touchAction = previousBodyTouchAction;
+    };
   }, [zoomOpen]);
 
   function resetZoom() {
@@ -318,8 +358,13 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                     <strong>{selectedMission.name}</strong>
                     <span>{selectedImage.credit || selectedMission.imageCredit || 'Fonte oficial'}</span>
                   </div>
+                  <div className="mission-image-lightbox-controls" role="group" aria-label="Controles de zoom">
+                    <button type="button" onClick={(event) => { event.stopPropagation(); setZoomScale((current) => Math.min(4, current + .5)); }} aria-label="Aumentar zoom">+</button>
+                    <button type="button" onClick={(event) => { event.stopPropagation(); setZoomScale((current) => { const next = Math.max(1, current - .5); if (next <= 1) setZoomOffset({ x: 0, y: 0 }); return next; }); }} aria-label="Diminuir zoom">−</button>
+                    <button type="button" onClick={(event) => { event.stopPropagation(); resetZoom(); }} aria-label="Restaurar zoom">100%</button>
+                  </div>
                   <span className="mission-image-lightbox-zoom-label" aria-hidden="true">
-                    {zoomScale > 1.01 ? Math.round(zoomScale * 100) + '%' : 'Toque duas vezes para ampliar'}
+                    {Math.round(zoomScale * 100)}%
                   </span>
                 </div>
               </div>
