@@ -16,7 +16,7 @@ const NASA_3D_TEXTURES = {
   mercurio: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/mercury/preview.webp?w=1024',
   venus: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/venus/preview.webp?w=1024',
   // Use the local 2048×1024 Blue Marble derivative to avoid a multi-megabyte remote texture on every visit.
-  terra: '/textures/earth-blue-marble.webp',
+  terra: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg',
   marte: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/mars/preview.webp?w=1024',
   jupiter: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/jupiter/preview.webp?w=1024',
   saturno: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/saturn/preview.webp?w=1024',
@@ -483,15 +483,17 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       let activeTexture = fallbackTexture;
 
       const geometry = new THREE.SphereGeometry(1.42, compact ? 48 : 60, compact ? 34 : 44);
-      const MaterialClass = planet.id === 'terra' && THREE.MeshPhysicalMaterial ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
+      // Earth uses a diffuse/rough surface response instead of the previous glossy
+      // physical-plastic look. The NASA true-color equirectangular map carries the
+      // continent/ocean detail; lighting now supplies the spherical shading.
+      const MaterialClass = THREE.MeshStandardMaterial;
       const material = new MaterialClass({
         map: activeTexture,
-        color: 0xffffff,
-        roughness: planet.id === 'terra' ? 0.58 : visual.roughness,
+        color: planet.id === 'terra' ? 0xe7efff : 0xffffff,
+        roughness: planet.id === 'terra' ? 0.86 : visual.roughness,
         metalness: 0,
         bumpMap: visual.bump && planet.id !== 'terra' ? activeTexture : undefined,
         bumpScale: planet.id === 'terra' ? 0 : (visual.bump || 0),
-        ...(planet.id === 'terra' ? { clearcoat: 0.12, clearcoatRoughness: 0.22, specularIntensity: 0.52, specularColor: new THREE.Color(0xbad8ff) } : {}),
       });
 
       THREE.Cache.enabled = true;
@@ -530,7 +532,7 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         const atmosphereMat = new THREE.MeshBasicMaterial({
           color: visual.atmosphereColor,
           transparent: true,
-          opacity: planet.id === 'venus' ? 0.11 : 0.08,
+          opacity: planet.id === 'venus' ? 0.11 : (planet.id === 'terra' ? 0.055 : 0.08),
           side: THREE.BackSide,
           depthWrite: false,
         });
