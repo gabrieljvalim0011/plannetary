@@ -507,7 +507,6 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       const textureLoader = new THREE.TextureLoader();
       textureLoader.setCrossOrigin('anonymous');
       const textureUrl = NASA_3D_TEXTURES[planet.id];
-      let cloudMesh = null;
       if (textureUrl) {
         textureLoader.load(textureUrl, (remoteTexture) => {
           if (cancelled) {
