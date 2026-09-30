@@ -58,9 +58,9 @@ export default function App() {
       </header>
 
       <main className="immersive-main" data-section={activeSection}>
-        <div key={`stats-${selectedPlanet.id}`} className="planet-transition"><PlanetStats planet={selectedPlanet} /></div>
+        <div key={`stats-${selectedPlanet.id}`} className="planet-transition planet-stats-transition"><PlanetStats planet={selectedPlanet} /></div>
         <AstronomicalOverlay planet={selectedPlanet} activeSection={activeSection} />
-        <div key={`hero-${selectedPlanet.id}`} className="planet-transition"><PlanetHero planet={selectedPlanet} onDetails={toggleDetails} /></div>
+        <div key={`hero-${selectedPlanet.id}`} className="planet-transition planet-hero-transition"><PlanetHero planet={selectedPlanet} onDetails={toggleDetails} /></div>
 
         <div className="lower-strip">
           <PlanetCalculator planet={selectedPlanet} />
