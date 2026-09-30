@@ -629,7 +629,6 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       };
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(host);
-      window.addEventListener('resize', resize);
 
       cleanup = () => {
         stopRender();
