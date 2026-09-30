@@ -129,6 +129,10 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         root.add(ring);
       }
 
+      THREE.Cache.enabled = true;
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.setCrossOrigin('anonymous');
+
       const animated = [];
       satellites.forEach((satellite, index) => {
         const orbit = new THREE.Mesh(
@@ -159,9 +163,6 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         mesh.userData.satelliteId = satellite.id;
         pivot.add(mesh);
 
-        THREE.Cache.enabled = true;
-        const textureLoader = new THREE.TextureLoader();
-        textureLoader.setCrossOrigin('anonymous');
         if (satellite.textureUrl) {
           textureLoader.load(satellite.textureUrl, (remoteTexture) => {
             if (cancelled) {
