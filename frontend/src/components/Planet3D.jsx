@@ -640,7 +640,6 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         observer.disconnect();
         document.removeEventListener('visibilitychange', onVisibilityChange);
         resizeObserver.disconnect();
-        window.removeEventListener('resize', resize);
         controls.dispose();
         geometry.dispose();
         material.dispose();
