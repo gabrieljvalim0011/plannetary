@@ -284,7 +284,7 @@ function createRenderer(THREE, canvas, width, height) {
   renderer.setSize(width, height, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.04;
+  renderer.toneMappingExposure = 1.08;
   return renderer;
 }
 
@@ -504,6 +504,8 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       const textureLoader = new THREE.TextureLoader();
       textureLoader.setCrossOrigin('anonymous');
       const textureUrl = NASA_3D_TEXTURES[planet.id];
+      let cloudTexture = null;
+      let cloudMesh = null;
       if (textureUrl) {
         textureLoader.load(textureUrl, (remoteTexture) => {
           if (cancelled) {
@@ -520,6 +522,34 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
           material.needsUpdate = true;
           activeTexture.dispose();
           activeTexture = remoteTexture;
+        }, undefined, () => {});
+      }
+
+      // Earth's previous presentation looked too flat and overly dark. Keep the
+      // land/ocean map as the base and add a lightweight cloud shell for depth.
+      if (planet.id === 'terra') {
+        textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png', (remoteClouds) => {
+          if (cancelled) {
+            remoteClouds.dispose();
+            return;
+          }
+          remoteClouds.colorSpace = THREE.SRGBColorSpace;
+          remoteClouds.wrapS = THREE.RepeatWrapping;
+          remoteClouds.wrapT = THREE.ClampToEdgeWrapping;
+          remoteClouds.anisotropy = 2;
+          const cloudGeometry = new THREE.SphereGeometry(1.455, compact ? 40 : 48, compact ? 28 : 32);
+          const cloudMaterial = new THREE.MeshStandardMaterial({
+            map: remoteClouds,
+            transparent: true,
+            opacity: 0.30,
+            depthWrite: false,
+            roughness: 1,
+            metalness: 0,
+          });
+          cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+          cloudMesh.renderOrder = 1;
+          cloudMesh.rotation.y = Math.PI * 0.02;
+          planetMesh.add(cloudMesh);
         }, undefined, () => {});
       }
       const planetMesh = new THREE.Mesh(geometry, material);
@@ -547,12 +577,21 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       // A second procedural cloud sphere created visible streak/triangle artifacts
       // over the Earth, so the extra layer is intentionally disabled.
 
-      const ambient = new THREE.HemisphereLight(0x9ab7ff, 0x02030a, 0.72);
+      const isEarth = planet.id === 'terra';
+      const ambient = new THREE.HemisphereLight(0xb8caff, 0x07101d, isEarth ? 1.05 : 0.72);
       scene.add(ambient);
-      const key = new THREE.DirectionalLight(0xf7f8ff, 2.8);
-      key.position.set(-3.8, 2.2, 4.6);
+
+      // Put the main light slightly above and toward the viewer so Earth's
+      // continents remain readable instead of leaving most of the globe in shadow.
+      const key = new THREE.DirectionalLight(0xffffff, isEarth ? 3.45 : 2.8);
+      key.position.set(-2.2, 2.8, 5.6);
       scene.add(key);
-      const rim = new THREE.DirectionalLight(planet.accent ? new THREE.Color(planet.accent) : 0x7da6ff, 0.72);
+
+      const fill = new THREE.DirectionalLight(0x89aaff, isEarth ? 1.05 : 0.42);
+      fill.position.set(4.8, 0.6, 3.2);
+      scene.add(fill);
+
+      const rim = new THREE.DirectionalLight(planet.accent ? new THREE.Color(planet.accent) : 0x7da6ff, isEarth ? 0.48 : 0.72);
       rim.position.set(4.2, -1.4, -3.2);
       scene.add(rim);
 
@@ -571,6 +610,7 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         }
         const delta = Math.min(clock.getDelta(), 0.05);
         planetMesh.rotation.y += delta * visual.rotation * 0.38;
+        if (cloudMesh) cloudMesh.rotation.y += delta * 0.015;
         controls.update();
         renderer.render(scene, camera);
         raf = window.requestAnimationFrame(render);
