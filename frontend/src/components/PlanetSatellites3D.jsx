@@ -70,6 +70,7 @@ function configureTexture(THREE, texture, renderer) {
 export default function PlanetSatellites3D({ planet, satellites = [], selectedId = null, onSelectMoon }) {
   const hostRef = useRef(null);
   const selectedRef = useRef(selectedId);
+  const dragRef = useRef({ active: false, moved: false, pointerId: null, lastX: 0, lastY: 0 });
 
   useEffect(() => {
     selectedRef.current = selectedId;
@@ -103,6 +104,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
 
       const root = new THREE.Group();
       root.rotation.x = THREE.MathUtils.degToRad(-5);
+      root.rotation.y = THREE.MathUtils.degToRad(-12);
       scene.add(root);
 
       const core = new THREE.Mesh(
@@ -219,15 +221,66 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
       document.addEventListener('visibilitychange', onVisibilityChange);
       startRender();
 
+      const drag = dragRef.current;
+
+      const onPointerDown = (event) => {
+        if (event.button != null && event.button !== 0) return;
+        drag.active = true;
+        drag.moved = false;
+        drag.pointerId = event.pointerId;
+        drag.lastX = event.clientX;
+        drag.lastY = event.clientY;
+        canvas.setPointerCapture?.(event.pointerId);
+        canvas.style.cursor = 'grabbing';
+      };
+
+      const onPointerMove = (event) => {
+        if (!drag.active || drag.pointerId !== event.pointerId) return;
+        const dx = event.clientX - drag.lastX;
+        const dy = event.clientY - drag.lastY;
+        drag.lastX = event.clientX;
+        drag.lastY = event.clientY;
+
+        if (Math.abs(dx) + Math.abs(dy) > 2) drag.moved = true;
+
+        root.rotation.y += dx * 0.008;
+        root.rotation.x = THREE.MathUtils.clamp(root.rotation.x + dy * 0.005, THREE.MathUtils.degToRad(-34), THREE.MathUtils.degToRad(26));
+      };
+
       const onPointerUp = (event) => {
+        if (drag.pointerId !== event.pointerId) return;
+
+        const wasDragged = drag.moved;
+        drag.active = false;
+        drag.pointerId = null;
+        canvas.style.cursor = 'grab';
+        canvas.releasePointerCapture?.(event.pointerId);
+
+        if (wasDragged) return;
+
         const rect = canvas.getBoundingClientRect();
-        const pointer = new THREE.Vector2(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
+        const pointer = new THREE.Vector2(
+          ((event.clientX - rect.left) / rect.width) * 2 - 1,
+          -((event.clientY - rect.top) / rect.height) * 2 + 1,
+        );
         const raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(pointer, camera);
         const hits = raycaster.intersectObjects(animated.map((item) => item.mesh), false);
         if (hits[0]?.object?.userData?.satelliteId) onSelectMoon?.(hits[0].object.userData.satelliteId);
       };
+
+      const onPointerCancel = (event) => {
+        if (drag.pointerId !== event.pointerId) return;
+        drag.active = false;
+        drag.moved = false;
+        drag.pointerId = null;
+        canvas.style.cursor = 'grab';
+      };
+
+      canvas.addEventListener('pointerdown', onPointerDown);
+      canvas.addEventListener('pointermove', onPointerMove);
       canvas.addEventListener('pointerup', onPointerUp);
+      canvas.addEventListener('pointercancel', onPointerCancel);
 
       const resize = () => {
         const nextWidth = Math.max(1, host.clientWidth);
@@ -244,7 +297,10 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         stopRender();
         observer.disconnect();
         document.removeEventListener('visibilitychange', onVisibilityChange);
+        canvas.removeEventListener('pointerdown', onPointerDown);
+        canvas.removeEventListener('pointermove', onPointerMove);
         canvas.removeEventListener('pointerup', onPointerUp);
+        canvas.removeEventListener('pointercancel', onPointerCancel);
         resizeObserver.disconnect();
         scene.traverse((object) => {
           if (object.geometry) object.geometry.dispose();
