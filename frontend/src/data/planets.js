@@ -35,7 +35,7 @@ export const planets = [
     imageUrl: 'https://science.nasa.gov/wp-content/uploads/2024/03/venus-mariner-10-pia23791-fig2-16x9-1.jpg',
     selectorImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/3D_Venus.png/250px-3D_Venus.png',
     selectorImageSourcePage: 'https://commons.wikimedia.org/wiki/File:3D_Venus.png',
-    selectorImageCredit: 'Jcpag2012 / Wikimedia Commons (CC BY-SA 4.0)',
+    selectorImageCredit: 'NASA/JPL — Voyager 2 (domínio público)',
     imageSourcePage: 'https://science.nasa.gov/solar-system/venus/', imageCredit: 'NASA/Mariner 10', factSource: 'https://science.nasa.gov/venus/venus-facts/', advanced: { axialTiltDeg: 3, density: 5.24, escapeVelocityKms: 10.36, atmosphere: 'Atmosfera espessa de dióxido de carbono e nitrogênio, com nuvens de ácido sulfúrico.', composition: 'Planeta rochoso com núcleo metálico, manto e crosta; estrutura interna semelhante à da Terra.', magnetism: 'Não possui campo magnético interno global; apresenta uma magnetosfera induzida pela interação com o vento solar.', moons: 'Nenhuma', rings: 'Nenhum' },
     accent: '#e5cfb1', glow: 'rgba(235,195,138,.28)'
   },
@@ -118,7 +118,7 @@ export const planets = [
     gravity: { value: 11.15, unit: 'm/s²' }, diameterKm: 49528, massKg: 102.4092e24, rotationPeriodHours: 0.67125 * 24, solarDayHours: 16.1, orbitalPeriodEarthDays: 164.79132 * 365.25,
     imageUrl: 'https://science.nasa.gov/wp-content/uploads/2024/03/pia01492-neptune-full-disk-16x9-1.jpg',
     selectorImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Neptune_Full_%28original%29.jpg/500px-Neptune_Full_%28original%29.jpg',
-    selectorImageSourcePage: 'https://commons.wikimedia.org/wiki/File:3D_Neptune.png',
+    selectorImageSourcePage: 'https://commons.wikimedia.org/wiki/File:Neptune_Full_(original).jpg',
     selectorImageCredit: 'Jcpag2012 / Wikimedia Commons (CC BY-SA 4.0)',
     imageSourcePage: 'https://science.nasa.gov/solar-system/neptune/', imageCredit: 'NASA/Voyager 2', factSource: 'https://science.nasa.gov/neptune/neptune-facts/', advanced: { axialTiltDeg: 28.3, density: 1.64, escapeVelocityKms: 23.5, atmosphere: 'Atmosfera de hidrogênio e hélio com metano; ventos e tempestades podem atingir velocidades extremas.', composition: 'Gigante de gelo com materiais ricos em água, amônia e metano acima de um núcleo rochoso.', magnetism: 'Possui um campo magnético forte, inclinado e deslocado em relação ao centro do planeta.', moons: 'Tritão é a maior e mais conhecida lua; o sistema também inclui luas menores.', rings: 'Anéis tênues e escuros' },
     accent: '#6e9dff', glow: 'rgba(64,112,255,.34)'
