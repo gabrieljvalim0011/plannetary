@@ -1,7 +1,7 @@
 {
   "name": "plannetary",
   "private": true,
-  "version": "2.1.4",
+  "version": "2.1.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest",
+    "@vitejs/plugin-react": "6.1.1",
+    "vite": "8.3.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "three": "0.186.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
 }
