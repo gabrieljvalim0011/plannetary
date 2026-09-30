@@ -275,3 +275,80 @@
   .planet-no-satellites { grid-template-columns:1fr; }
   .planet-no-satellites-orbit { width:58px; height:58px; }
 }
+
+
+/* Plannetary 2.0.21 — área de luas: interação visível e toque confortável. */
+.planet-satellites-stage {
+  position: relative;
+  touch-action: none;
+}
+
+.planet-satellites-stage::after {
+  content: 'ARRASTE PARA GIRAR  ·  TOQUE EM UMA LUA';
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 6px 9px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 999px;
+  background: rgba(3,5,10,.52);
+  color: rgba(255,255,255,.30);
+  font-size: .46rem;
+  font-weight: 800;
+  letter-spacing: .10em;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .25s ease, color .25s ease, border-color .25s ease;
+}
+
+.planet-satellites-stage:hover::after {
+  color: rgba(255,255,255,.58);
+  border-color: rgba(168,194,255,.18);
+}
+
+.planet-satellites-3d {
+  position: relative;
+  z-index: 1;
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.planet-satellites-3d canvas {
+  touch-action: none !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.planet-satellites-list button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 760px) {
+  .planet-satellites-stage::after {
+    bottom: 8px;
+    font-size: .42rem;
+    letter-spacing: .08em;
+  }
+
+  .planet-satellites-stage {
+    min-height: 270px;
+    border-radius: 16px;
+  }
+
+  .planet-satellites-3d {
+    height: 270px;
+  }
+
+  .planet-satellites-list {
+    gap: 6px;
+  }
+
+  .planet-satellites-list button {
+    min-height: 48px;
+    padding: 9px 11px;
+  }
+}
