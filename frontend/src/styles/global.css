@@ -4681,16 +4681,20 @@ select,
 
 .planet-rail-loop-arc {
   position: absolute !important;
-  top: 26px !important;
-  left: 31px !important;
-  width: 110px !important;
-  height: calc(100% - 52px) !important;
-  border: 1px solid rgba(143,174,227,.18) !important;
-  border-right: 0 !important;
-  border-radius: 50% 0 0 50% !important;
+  top: 20px !important;
+  left: 28px !important;
+  width: 120px !important;
+  height: calc(100% - 40px) !important;
+  overflow: visible !important;
   background: transparent !important;
-  box-shadow: 0 0 26px rgba(100,135,190,.025) !important;
   pointer-events: none !important;
+  filter: drop-shadow(0 0 9px rgba(113,150,211,.05)) !important;
+}
+.planet-rail-loop-arc path {
+  fill: none !important;
+  stroke: rgba(143,174,227,.17) !important;
+  stroke-width: 1 !important;
+  vector-effect: non-scaling-stroke !important;
 }
 
 .planet-rail-loop-stage {
@@ -4804,6 +4808,21 @@ select,
 .planet-orb-loop.is-selected .planet-orb-loop-name {
   opacity: 1 !important;
   color: rgba(255,255,255,.94) !important;
+}
+
+/* Netuno usa uma fotografia de disco completo do Voyager 2. O blend screen elimina o fundo preto do JPEG. */
+.planet-orb-loop.is-netuno .planet-orb-loop-image img {
+  width: 66px !important;
+  height: 66px !important;
+  max-width: 66px !important;
+  max-height: 66px !important;
+  object-fit: contain !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.04) contrast(1.04) brightness(1.05) drop-shadow(0 5px 12px rgba(0,0,0,.18)) !important;
+}
+.planet-orb-loop.is-netuno .planet-orb-loop-image {
+  width: 66px !important;
+  height: 66px !important;
 }
 
 /* Saturno usa uma imagem transparente própria e uma leve inclinação, sem alterar o planeta grande. */
