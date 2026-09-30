@@ -146,10 +146,13 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         let activeTexture = fallbackTexture;
         const material = new THREE.MeshStandardMaterial({
           map: activeTexture,
+          color: 0xffffff,
           roughness: satellite.roughness ?? 0.94,
           metalness: 0,
           bumpMap: satellite.rocky ? activeTexture : undefined,
           bumpScale: satellite.rocky ? 0.014 : 0,
+          emissive: new THREE.Color(satellite.color || '#ffffff'),
+          emissiveIntensity: 0,
         });
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(satellite.orbit, 0, 0);
@@ -198,8 +201,11 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         animated.forEach(({ pivot, mesh, satellite }) => {
           pivot.rotation.y += delta * satellite.speed * 0.2;
           mesh.rotation.y += delta * 0.12;
-          const selectedScale = selectedRef.current === satellite.id ? 1.24 : 1;
+          const selected = selectedRef.current === satellite.id;
+          const selectedScale = selected ? 1.24 : 1;
+          const targetEmissive = selected ? 0.16 : 0;
           if (mesh.scale.x !== selectedScale) mesh.scale.setScalar(selectedScale);
+          if (material.emissiveIntensity !== targetEmissive) material.emissiveIntensity = targetEmissive;
         });
         renderer.render(scene, camera);
         raf = requestAnimationFrame(render);
@@ -264,6 +270,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
 
         if (zoomPointersRef.current.size === 2) {
           drag.active = false;
+          drag.moved = true;
           pinchRef.current = {
             active: true,
             startDistance: getZoomPointerDistance(),
