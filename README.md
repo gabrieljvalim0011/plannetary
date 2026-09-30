@@ -15,9 +15,9 @@ Plannetary é uma experiência web interativa para explorar o Sistema Solar, com
 
 ## 🛠️ Stack
 
-- React
-- Vite
-- Three.js
+- React 19.3.0
+- Vite 8.3.1
+- Three.js 0.186.1
 - JavaScript (ES modules)
 - CSS
 
@@ -39,7 +39,7 @@ Plannetary é uma experiência web interativa para explorar o Sistema Solar, com
 
 ## 🚀 Executando localmente
 
-Requisitos: Node.js 20+ e npm.
+Requisitos: Node.js 20.19+ ou 22.12+ e npm.
 
 ```bash
 cd frontend
@@ -53,6 +53,9 @@ Para gerar a versão de produção:
 npm run build
 npm run preview
 ```
+
+
+> O projeto fixa as versões diretas da toolchain para tornar os builds reproduzíveis. As dependências transitivas ficam sob controle do gerenciador de pacotes.
 
 ## 🔐 Variáveis de ambiente
 
