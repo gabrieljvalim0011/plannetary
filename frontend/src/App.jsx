@@ -31,6 +31,27 @@ export default function App() {
     localStorage.setItem(SELECTED_PLANET_KEY, selectedPlanet.id);
   }, [selectedPlanet.id]);
 
+  useEffect(() => {
+    const overlayOpen = activeSection !== 'planets' || planetExperienceOpen;
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyOverscroll = body.style.overscrollBehavior;
+
+    if (overlayOpen) {
+      root.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+      body.style.overscrollBehavior = 'none';
+    }
+
+    return () => {
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+      body.style.overscrollBehavior = previousBodyOverscroll;
+    };
+  }, [activeSection, planetExperienceOpen]);
+
   const handleSelectPlanet = useCallback((id, keepExperienceOpen = false) => {
     setSelectedPlanetId((current) => (id !== current ? id : current));
     if (!keepExperienceOpen) setPlanetExperienceOpen(false);
