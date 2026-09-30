@@ -87,7 +87,6 @@ function selectByOffset(currentOffsets, selectedPlanetId, targetPlanetId, shift,
 
 function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
   const lockRef = useRef(false);
-  const touchStartXRef = useRef(null);
   const stageRef = useRef(null);
   const currentIndexRef = useRef(0);
   const lastHandledIdRef = useRef(selectedPlanetId);
@@ -161,24 +160,6 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
     }
   }, [moveSelection]);
 
-  const handleTouchStart = useCallback((event) => {
-    if (window.innerWidth > 860 || !event.touches?.length) return;
-    touchStartXRef.current = event.touches[0].clientX;
-  }, []);
-
-  const handleTouchEnd = useCallback((event) => {
-    if (window.innerWidth > 860 || touchStartXRef.current == null || !event.changedTouches?.length) return;
-    const deltaX = event.changedTouches[0].clientX - touchStartXRef.current;
-    touchStartXRef.current = null;
-    if (Math.abs(deltaX) < 34 || lockRef.current) return;
-
-    lockRef.current = true;
-    moveSelection(deltaX < 0 ? 1 : -1);
-    window.setTimeout(() => {
-      lockRef.current = false;
-    }, RAIL_DEBOUNCE_MS);
-  }, [moveSelection]);
-
   const handlePlanetClick = useCallback((planet, relativeOffset) => {
     if (relativeOffset === 0) return;
 
@@ -211,8 +192,6 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
         aria-activedescendant={`planet-rail-loop-${selectedPlanetId}`}
         onWheel={handleWheel}
         onKeyDown={handleKeyDown}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
       >
         {planets.map((planet) => {
           const relativeIndex = railOffsets[planet.id] ?? 0;
