@@ -5473,3 +5473,407 @@ select,
   mask-image: radial-gradient(circle at center, #000 0 49%, rgba(0,0,0,.98) 53%, transparent 72%) !important;
   filter: saturate(1.04) contrast(1.05) brightness(1.05) drop-shadow(0 5px 12px rgba(0,0,0,.18)) !important;
 }
+
+
+/* Plannetary 2.0.14 — mobile polish: topo, carrossel de planetas e painéis modais. */
+@media (max-width: 860px) {
+  /* Cabeçalho fica compacto e separado do seletor. */
+  .immersive-header {
+    position: absolute !important;
+    inset: 12px 14px auto !important;
+    height: 54px !important;
+    grid-template-columns: 1fr auto !important;
+    align-items: center !important;
+    gap: 14px !important;
+    z-index: 1200 !important;
+  }
+
+  .header-brand {
+    font-size: 1rem !important;
+    letter-spacing: -.025em !important;
+  }
+
+  .header-brand span {
+    font-size: .78rem !important;
+  }
+
+  .moon-status-trigger {
+    width: 52px !important;
+    height: 52px !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .moon-status {
+    min-width: 0 !important;
+    width: 52px !important;
+    height: 52px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .moon-status-copy {
+    display: none !important;
+  }
+
+  .moon-status .moon-icon {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  /* O seletor vira um carrossel compacto, com foco no planeta ativo. */
+  .planet-rail-loop {
+    position: absolute !important;
+    top: 88px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 78px !important;
+    padding: 0 !important;
+    z-index: 1100 !important;
+    pointer-events: auto !important;
+  }
+
+  .planet-rail-loop::before {
+    content: 'PLANETAS';
+    position: absolute;
+    left: 16px;
+    top: -12px;
+    color: rgba(255,255,255,.24);
+    font-size: .46rem;
+    font-weight: 800;
+    letter-spacing: .17em;
+    pointer-events: none;
+  }
+
+  .planet-rail-loop::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(158,187,255,.16) 18%, rgba(255,255,255,.08) 50%, rgba(158,187,255,.16) 82%, transparent);
+    pointer-events: none;
+  }
+
+  .planet-rail-loop-stage {
+    width: 100% !important;
+    height: 78px !important;
+    gap: 10px !important;
+    padding: 7px 18px 11px !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-inline: calc(50% - 27px) !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    touch-action: pan-x !important;
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+
+  .planet-rail-loop-stage::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .planet-orb-loop,
+  .planet-orb-loop.is-selected {
+    flex: 0 0 54px !important;
+    width: 54px !important;
+    height: 54px !important;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important;
+    transform: scale(var(--rail-loop-scale)) translateZ(0) !important;
+  }
+
+  .planet-orb-loop:not(.is-selected) {
+    --rail-loop-scale: .88 !important;
+    filter: saturate(.84) brightness(.82) drop-shadow(0 5px 12px rgba(70,110,200,.10)) !important;
+  }
+
+  .planet-orb-loop.is-selected {
+    --rail-loop-scale: 1.16 !important;
+    filter: saturate(1.08) brightness(1.06) drop-shadow(0 9px 22px rgba(110,155,255,.26)) !important;
+    z-index: 8 !important;
+  }
+
+  .planet-orb-loop.is-selected::after {
+    inset: -5px !important;
+    border-color: rgba(193,214,255,.30) !important;
+    box-shadow: 0 0 0 5px rgba(140,177,255,.045), 0 0 26px rgba(122,158,255,.12) !important;
+  }
+
+  .planet-orb-loop-name {
+    display: block !important;
+    left: 50% !important;
+    top: calc(100% + 7px) !important;
+    width: max-content !important;
+    transform: translateX(-50%) !important;
+    font-size: .47rem !important;
+    letter-spacing: .09em !important;
+    text-align: center !important;
+    color: rgba(255,255,255,.46) !important;
+    opacity: 0 !important;
+  }
+
+  .planet-orb-loop.is-selected .planet-orb-loop-name {
+    opacity: 1 !important;
+    color: rgba(226,235,255,.88) !important;
+  }
+
+  .planet-orb-loop-image img {
+    width: 54px !important;
+    height: 54px !important;
+    max-width: 54px !important;
+    max-height: 54px !important;
+  }
+
+  .planet-orb-loop.is-saturn .planet-orb-loop-image,
+  .planet-orb-loop.is-saturn .planet-orb-loop-image img {
+    width: 94px !important;
+    height: 56px !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  .planet-orb-loop.is-saturn .planet-orb-loop-image {
+    left: -20px !important;
+  }
+
+  /* O conteúdo principal começa depois do cabeçalho + seletor. */
+  .immersive-main {
+    padding-top: 174px !important;
+  }
+
+  /* Painéis de experiência são superfícies independentes; o fundo não recebe o gesto. */
+  .mission-screen,
+  .moon-screen {
+    overscroll-behavior: none !important;
+  }
+
+  .mission-screen-inner,
+  .moon-screen-inner {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+  }
+
+  .mission-screen-inner {
+    height: 100% !important;
+    min-height: 100% !important;
+    overflow-y: auto !important;
+  }
+
+  .mission-screen-content {
+    overflow: visible !important;
+  }
+
+  /* A Lua deixa de ser uma “tela grande” comprimida: visual curto, informações em blocos claros. */
+  .moon-screen-inner {
+    height: 100% !important;
+    overflow-y: auto !important;
+    padding: 18px 16px 30px !important;
+  }
+
+  .moon-screen-header {
+    min-height: 44px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .moon-back {
+    font-size: .58rem !important;
+    gap: 8px !important;
+  }
+
+  .moon-screen-content {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+    padding: 8px 0 0 !important;
+    overflow: visible !important;
+  }
+
+  .moon-screen-visual {
+    height: 328px !important;
+    min-height: 328px !important;
+    border: 0 !important;
+    border-radius: 22px !important;
+    box-shadow: none !important;
+    background:
+      radial-gradient(circle at 50% 43%, rgba(216,226,246,.07), transparent 34%),
+      radial-gradient(circle at 50% 53%, rgba(118,145,193,.06), transparent 62%) !important;
+  }
+
+  .moon-visual-stage {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  .moon-screen-orbit {
+    width: min(80vw, 288px) !important;
+    height: min(80vw, 288px) !important;
+  }
+
+  .moon-screen-disc {
+    width: min(56vw, 224px) !important;
+  }
+
+  .moon-3d {
+    max-width: 228px !important;
+    max-height: 228px !important;
+  }
+
+  .moon-screen-visual-caption {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 14px !important;
+  }
+
+  .moon-screen-visual-caption span {
+    font-size: .46rem !important;
+  }
+
+  .moon-screen-visual-caption strong {
+    font-size: 1.28rem !important;
+    margin-top: 3px !important;
+  }
+
+  .moon-screen-visual-caption small {
+    max-width: 100% !important;
+    font-size: .57rem !important;
+  }
+
+  .moon-screen-copy {
+    max-width: none !important;
+    padding: 24px 0 0 !important;
+  }
+
+  .moon-screen-kicker {
+    font-size: .52rem !important;
+  }
+
+  .moon-screen-copy h1 {
+    margin-top: 6px !important;
+    font-size: clamp(3.35rem, 17vw, 4.5rem) !important;
+  }
+
+  .moon-screen-intro {
+    margin-top: 12px !important;
+    max-width: none !important;
+    font-size: .76rem !important;
+    line-height: 1.58 !important;
+  }
+
+  .moon-screen-facts {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 14px !important;
+    margin-top: 18px !important;
+  }
+
+  .moon-screen-facts > div {
+    min-height: 70px !important;
+    padding: 12px 0 !important;
+  }
+
+  .moon-screen-facts span {
+    font-size: .47rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .moon-screen-facts strong {
+    margin-top: 5px !important;
+    font-size: .76rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .moon-screen-facts small {
+    font-size: .53rem !important;
+  }
+
+  .moon-screen-events {
+    margin-top: 18px !important;
+  }
+
+  .moon-screen-event-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .moon-screen-event {
+    min-width: 0 !important;
+    padding: 10px !important;
+    border-radius: 13px !important;
+  }
+
+  .moon-screen-event span {
+    font-size: .46rem !important;
+  }
+
+  .moon-screen-event strong {
+    font-size: .68rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .moon-screen-event small {
+    font-size: .50rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .moon-screen-note {
+    margin-top: 11px !important;
+    font-size: .54rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .moon-screen-lower {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-top: 20px !important;
+    padding-top: 18px !important;
+  }
+
+  .moon-missions {
+    margin-top: 22px !important;
+  }
+
+  .moon-missions-intro {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .moon-missions-intro > small {
+    max-width: none !important;
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .planet-rail-loop-stage {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    gap: 8px !important;
+  }
+
+  .moon-screen-event-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .moon-screen-visual {
+    height: 306px !important;
+    min-height: 306px !important;
+  }
+
+  .moon-3d {
+    max-width: 214px !important;
+    max-height: 214px !important;
+  }
+}
