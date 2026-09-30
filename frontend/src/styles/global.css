@@ -5877,3 +5877,369 @@ select,
     max-height: 214px !important;
   }
 }
+
+
+/* Plannetary 2.0.15 — mobile mission redesign + free planet carousel. */
+@media (max-width: 860px) {
+  /* Touch no seletor deve controlar apenas o scroll nativo; não há troca automática por swipe. */
+  .planet-rail-loop-stage {
+    scroll-snap-type: none !important;
+    scroll-padding-inline: 0 !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .planet-orb-loop,
+  .planet-orb-loop.is-selected {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+
+  /* Central de missões: composição vertical pensada para leitura em uma mão. */
+  .mission-screen {
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 50% 4%, rgba(108,148,255,.12), transparent 30%),
+      radial-gradient(circle at 100% 52%, rgba(134,76,196,.08), transparent 38%),
+      rgba(3,5,10,.985) !important;
+  }
+
+  .mission-screen::before {
+    background: linear-gradient(180deg, rgba(3,5,10,.42) 0%, rgba(3,5,10,.08) 42%, rgba(3,5,10,.38) 100%) !important;
+  }
+
+  .mission-screen-inner {
+    height: 100% !important;
+    min-height: 100% !important;
+    padding: 14px 14px 34px !important;
+    gap: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .mission-screen-header {
+    position: sticky !important;
+    top: 0 !important;
+    min-height: 48px !important;
+    margin: 0 -14px !important;
+    padding: 2px 14px 8px !important;
+    background: linear-gradient(180deg, rgba(3,5,10,.98) 0%, rgba(3,5,10,.82) 72%, transparent 100%) !important;
+    z-index: 20 !important;
+  }
+
+  .mission-back {
+    font-size: .57rem !important;
+    gap: 7px !important;
+    padding: 8px 0 !important;
+  }
+
+  .mission-screen-path {
+    display: none !important;
+  }
+
+  .mission-planet-selector {
+    margin: 4px 0 0 !important;
+    padding: 8px 0 6px !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain !important;
+    touch-action: pan-x !important;
+    scrollbar-width: none !important;
+  }
+
+  .mission-planet-selector::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .mission-planet-tab {
+    min-height: 36px !important;
+    padding: 5px 10px 5px 6px !important;
+    border-color: rgba(255,255,255,.07) !important;
+    background: rgba(255,255,255,.025) !important;
+    font-size: .52rem !important;
+  }
+
+  .mission-planet-tab.is-selected {
+    border-color: rgba(167,194,255,.24) !important;
+    background: rgba(133,166,241,.10) !important;
+  }
+
+  .mission-planet-thumb {
+    width: 22px !important;
+    height: 22px !important;
+    flex-basis: 22px !important;
+  }
+
+  .mission-catalog {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin: 6px 0 0 !important;
+    padding: 4px 0 8px !important;
+  }
+
+  .mission-filter-group {
+    width: 100% !important;
+    overflow-x: auto !important;
+    gap: 4px !important;
+    padding-bottom: 2px !important;
+    scrollbar-width: none !important;
+    touch-action: pan-x !important;
+  }
+
+  .mission-filter-group::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .mission-filter {
+    flex: 0 0 auto !important;
+    padding: 7px 10px !important;
+    font-size: .47rem !important;
+  }
+
+  .mission-list {
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+    padding: 2px 2px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain !important;
+    touch-action: pan-x !important;
+  }
+
+  .mission-list-item {
+    flex: 0 0 min(76vw, 290px) !important;
+    min-width: min(76vw, 290px) !important;
+    max-width: min(76vw, 290px) !important;
+    min-height: 60px !important;
+    padding: 10px 11px !important;
+    border-radius: 15px !important;
+    background: rgba(255,255,255,.025) !important;
+  }
+
+  .mission-list-copy strong {
+    font-size: .62rem !important;
+  }
+
+  .mission-list-copy small {
+    font-size: .47rem !important;
+  }
+
+  .mission-screen-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    padding: 10px 0 26px !important;
+    overflow: visible !important;
+    min-height: 0 !important;
+  }
+
+  .mission-screen-visual {
+    order: 1 !important;
+    width: 100% !important;
+    height: min(58vw, 280px) !important;
+    min-height: 220px !important;
+    max-height: 280px !important;
+    border-radius: 22px !important;
+    box-shadow: 0 24px 70px rgba(0,0,0,.34) !important;
+  }
+
+  .mission-screen-visual img {
+    padding: 8px !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
+
+  .mission-visual-backdrop {
+    opacity: .16 !important;
+  }
+
+  .mission-visual-caption {
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 13px !important;
+    max-width: 78% !important;
+  }
+
+  .mission-visual-caption span {
+    font-size: .44rem !important;
+  }
+
+  .mission-visual-caption strong {
+    margin-top: 3px !important;
+    font-size: .82rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .mission-screen-copy {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .mission-status-line {
+    font-size: .49rem !important;
+    letter-spacing: .12em !important;
+  }
+
+  .mission-screen-kicker {
+    margin-top: 12px !important;
+    font-size: .49rem !important;
+  }
+
+  .mission-screen h1,
+  .mission-screen-title {
+    margin-top: 5px !important;
+    font-size: clamp(2.25rem, 11vw, 3.7rem) !important;
+    line-height: .91 !important;
+    letter-spacing: -.06em !important;
+    text-wrap: balance !important;
+  }
+
+  .mission-screen-location {
+    margin-top: 9px !important;
+    font-size: .68rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .mission-screen-objective {
+    margin-top: 14px !important;
+    max-width: none !important;
+    font-size: .72rem !important;
+    line-height: 1.58 !important;
+  }
+
+  .mission-meta-line {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 5px 7px !important;
+    margin-top: 11px !important;
+    font-size: .48rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .mission-screen-facts {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 12px !important;
+    margin-top: 18px !important;
+    padding-top: 10px !important;
+  }
+
+  .mission-screen-facts div {
+    min-width: 0 !important;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,.065) !important;
+  }
+
+  .mission-screen-facts span {
+    font-size: .44rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .mission-screen-facts strong {
+    margin-top: 5px !important;
+    font-size: .62rem !important;
+    line-height: 1.32 !important;
+  }
+
+  .mission-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .mission-info-grid section {
+    padding-top: 13px !important;
+  }
+
+  .mission-section-label {
+    font-size: .45rem !important;
+  }
+
+  .mission-info-grid p,
+  .mission-info-grid ul {
+    margin-top: 7px !important;
+    font-size: .64rem !important;
+    line-height: 1.58 !important;
+  }
+
+  .mission-info-grid ul {
+    padding-left: 15px !important;
+  }
+
+  .mission-screen-note {
+    margin-top: 17px !important;
+    padding-left: 11px !important;
+    font-size: .58rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .mission-screen-footer {
+    margin-top: 17px !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .mission-screen-footer a {
+    font-size: .54rem !important;
+  }
+
+  .mission-image-credit {
+    font-size: .47rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .mission-gallery {
+    position: absolute !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    max-width: none !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain !important;
+    touch-action: pan-x !important;
+    padding-bottom: 1px !important;
+  }
+
+  .mission-gallery-thumb {
+    flex: 0 0 58px !important;
+    width: 58px !important;
+    height: 42px !important;
+    border-radius: 8px !important;
+  }
+
+  .mission-gallery-thumb img {
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .mission-screen-inner {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .mission-screen-header {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .mission-list-item {
+    flex-basis: min(80vw, 282px) !important;
+    min-width: min(80vw, 282px) !important;
+  }
+
+  .mission-screen-visual {
+    min-height: 205px !important;
+    height: 56vw !important;
+  }
+}
