@@ -199,9 +199,28 @@ function PlanetExperience({ planet, planets, onSelectPlanet, onClose }) {
                     ))}
                     {activeSatellite && (
                       <div className="planet-satellite-detail">
-                        <span>Em destaque</span>
-                        <strong>{activeSatellite.name}</strong>
-                        <small>{activeSatellite.retrograde ? 'Seu movimento orbital ao redor do planeta é retrógrado.' : `Uma representação simplificada do satélite no sistema de ${planet.name}.`}</small>
+                        <div className="planet-satellite-detail-heading">
+                          <div>
+                            <span>EM DESTAQUE</span>
+                            <strong>{activeSatellite.name}</strong>
+                          </div>
+                          <small>{activeSatellite.type || 'Satélite natural'}</small>
+                        </div>
+                        <p>{activeSatellite.detail || `Uma representação simplificada do satélite no sistema de ${planet.name}.`}</p>
+                        <div className="planet-satellite-detail-stats">
+                          {Number.isFinite(activeSatellite.diameterKm) ? (
+                            <div><span>Diâmetro</span><strong>{activeSatellite.diameterKm.toLocaleString('pt-BR')} km</strong></div>
+                          ) : null}
+                          {Number.isFinite(activeSatellite.orbitalPeriodDays) ? (
+                            <div><span>Período orbital</span><strong>{activeSatellite.orbitalPeriodDays.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} dias</strong></div>
+                          ) : null}
+                        </div>
+                        {activeSatellite.highlight ? (
+                          <div className="planet-satellite-highlight">
+                            <span>DESTAQUE</span>
+                            <strong>{activeSatellite.highlight}</strong>
+                          </div>
+                        ) : null}
                       </div>
                     )}
                     <a href={satelliteSystem.source} target="_blank" rel="noreferrer">{satelliteSystem.sourceLabel} ↗</a>
