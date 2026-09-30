@@ -489,8 +489,10 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       const MaterialClass = THREE.MeshStandardMaterial;
       const material = new MaterialClass({
         map: activeTexture,
-        color: planet.id === 'terra' ? 0xe7efff : 0xffffff,
-        roughness: planet.id === 'terra' ? 0.86 : visual.roughness,
+        // Keep the NASA true-color Earth map untinted; applying a blue base color
+        // multiplied the texture and washed out the continents in the 3D material.
+        color: 0xffffff,
+        roughness: planet.id === 'terra' ? 0.82 : visual.roughness,
         metalness: 0,
         bumpMap: visual.bump && planet.id !== 'terra' ? activeTexture : undefined,
         bumpScale: planet.id === 'terra' ? 0 : (visual.bump || 0),
