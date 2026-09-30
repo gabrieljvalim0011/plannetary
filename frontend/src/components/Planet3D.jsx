@@ -5,8 +5,8 @@ const PLANET_VISUALS = {
   venus: { base: '#c9ad79', atmosphere: true, atmosphereColor: '#d7a96f', atmosphereIntensity: 0.22, rotation: 0.28, roughness: 0.93, axialTilt: 177.4 },
   terra: { base: '#4d78b8', atmosphere: true, atmosphereColor: '#6eb3ff', atmosphereIntensity: 0.17, rotation: 0.22, roughness: 0.72, axialTilt: 23.4 },
   marte: { base: '#b45e3d', atmosphere: true, atmosphereColor: '#d07b59', atmosphereIntensity: 0.09, rotation: 0.19, roughness: 0.94, bump: 0.06, axialTilt: 25.2 },
-  jupiter: { base: '#c9a47c', clouds: true, rotation: 0.38, roughness: 0.84, axialTilt: 3.1 },
-  saturno: { base: '#cdbd98', clouds: true, rings: true, rotation: 0.31, roughness: 0.86, axialTilt: 26.7 },
+  jupiter: { base: '#c9a47c', rotation: 0.38, roughness: 0.84, axialTilt: 3.1 },
+  saturno: { base: '#cdbd98', rings: true, rotation: 0.31, roughness: 0.86, axialTilt: 26.7 },
   urano: { base: '#7cbaca', atmosphere: true, atmosphereColor: '#72d5e5', atmosphereIntensity: 0.18, rotation: 0.28, roughness: 0.8, axialTilt: 97.8 },
   netuno: { base: '#3d65bc', atmosphere: true, atmosphereColor: '#4f82e9', atmosphereIntensity: 0.19, rotation: 0.2, roughness: 0.82, axialTilt: 28.3 },
 };
@@ -236,38 +236,6 @@ function drawTexture(id) {
     ? drawGasTexture(id)
     : drawTerrestrialTexture(id);
   fallbackCanvasCache.set(id, canvas);
-  return canvas;
-}
-
-function makeMoonTexture() {
-  const width = 768;
-  const height = 384;
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  const rng = seeded(211);
-  const gradient = ctx.createLinearGradient(0, 0, 0, height);
-  gradient.addColorStop(0, '#a4a7aa');
-  gradient.addColorStop(0.5, '#777b7f');
-  gradient.addColorStop(1, '#575b60');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = 'rgba(45,47,50,.55)';
-  for (let i = 0; i < 280; i += 1) {
-    const x = rng() * width;
-    const y = rng() * height;
-    const r = 0.8 + rng() * 10;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-    if (r > 4) {
-      ctx.strokeStyle = 'rgba(242,244,246,.13)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-  }
-  drawNoise(ctx, width, height, rng, 28, '#7a7d80');
   return canvas;
 }
 
@@ -539,7 +507,6 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       const textureLoader = new THREE.TextureLoader();
       textureLoader.setCrossOrigin('anonymous');
       const textureUrl = NASA_3D_TEXTURES[planet.id];
-      let cloudTexture = null;
       let cloudMesh = null;
       if (textureUrl) {
         textureLoader.load(textureUrl, (remoteTexture) => {
