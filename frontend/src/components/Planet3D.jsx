@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const PLANET_VISUALS = {
   mercurio: { base: '#9c9992', atmosphere: false, rotation: 0.16, roughness: 0.96, bump: 0.07, axialTilt: 2 },
-  venus: { base: '#c9ad79', atmosphere: true, atmosphereColor: '#d7a96f', rotation: 0.28, roughness: 0.93, axialTilt: 177.4 },
-  terra: { base: '#4d78b8', atmosphere: true, atmosphereColor: '#6eb3ff', clouds: true, rotation: 0.22, roughness: 0.72, axialTilt: 23.4 },
-  marte: { base: '#b45e3d', atmosphere: true, atmosphereColor: '#d07b59', rotation: 0.19, roughness: 0.94, bump: 0.06, axialTilt: 25.2 },
+  venus: { base: '#c9ad79', atmosphere: true, atmosphereColor: '#d7a96f', atmosphereIntensity: 0.22, rotation: 0.28, roughness: 0.93, axialTilt: 177.4 },
+  terra: { base: '#4d78b8', atmosphere: true, atmosphereColor: '#6eb3ff', atmosphereIntensity: 0.17, rotation: 0.22, roughness: 0.72, axialTilt: 23.4 },
+  marte: { base: '#b45e3d', atmosphere: true, atmosphereColor: '#d07b59', atmosphereIntensity: 0.09, rotation: 0.19, roughness: 0.94, bump: 0.06, axialTilt: 25.2 },
   jupiter: { base: '#c9a47c', clouds: true, rotation: 0.38, roughness: 0.84, axialTilt: 3.1 },
   saturno: { base: '#cdbd98', clouds: true, rings: true, rotation: 0.31, roughness: 0.86, axialTilt: 26.7 },
-  urano: { base: '#7cbaca', atmosphere: true, atmosphereColor: '#72d5e5', rotation: 0.28, roughness: 0.8, axialTilt: 97.8 },
-  netuno: { base: '#3d65bc', atmosphere: true, atmosphereColor: '#4f82e9', rotation: 0.2, roughness: 0.82, axialTilt: 28.3 },
+  urano: { base: '#7cbaca', atmosphere: true, atmosphereColor: '#72d5e5', atmosphereIntensity: 0.18, rotation: 0.28, roughness: 0.8, axialTilt: 97.8 },
+  netuno: { base: '#3d65bc', atmosphere: true, atmosphereColor: '#4f82e9', atmosphereIntensity: 0.19, rotation: 0.2, roughness: 0.82, axialTilt: 28.3 },
 };
 
 
@@ -360,6 +360,41 @@ function makeSaturnRingMaterial(THREE, innerRadius, outerRadius, tone, opacity, 
   });
 }
 
+
+function createPlanetAtmosphereMaterial(THREE, color, intensity = 0.14) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uColor: { value: new THREE.Color(color) },
+      uIntensity: { value: intensity },
+    },
+    vertexShader: `
+      varying float vFresnel;
+      void main() {
+        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+        vec3 worldNormal = normalize(mat3(modelMatrix) * normal);
+        vec3 viewDirection = normalize(cameraPosition - worldPosition.xyz);
+        vFresnel = pow(1.0 - abs(dot(worldNormal, viewDirection)), 2.6);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 uColor;
+      uniform float uIntensity;
+      varying float vFresnel;
+      void main() {
+        float edge = smoothstep(0.04, 0.92, vFresnel);
+        float alpha = edge * uIntensity;
+        gl_FragColor = vec4(uColor, alpha);
+      }
+    `,
+    transparent: true,
+    side: THREE.BackSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    toneMapped: true,
+  });
+}
+
 function createSaturnRings(THREE) {
   const ringGroup = new THREE.Group();
   ringGroup.rotation.x = THREE.MathUtils.degToRad(66);
@@ -484,7 +519,7 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       fallbackTexture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 2);
       let activeTexture = fallbackTexture;
 
-      const geometry = new THREE.SphereGeometry(1.42, compact ? 48 : 60, compact ? 34 : 44);
+      const geometry = new THREE.SphereGeometry(1.42, compact ? 56 : 72, compact ? 38 : 48);
       // Earth uses a diffuse/rough surface response instead of the previous glossy
       // physical-plastic look. The NASA true-color equirectangular map carries the
       // continent/ocean detail; lighting now supplies the spherical shading.
@@ -496,8 +531,8 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         color: 0xffffff,
         roughness: planet.id === 'terra' ? 0.82 : visual.roughness,
         metalness: 0,
-        bumpMap: visual.bump && planet.id !== 'terra' ? activeTexture : undefined,
-        bumpScale: planet.id === 'terra' ? 0 : (visual.bump || 0),
+        bumpMap: visual.bump ? activeTexture : undefined,
+        bumpScale: visual.bump ? Math.min(visual.bump, 0.05) : 0,
       });
 
       THREE.Cache.enabled = true;
@@ -517,8 +552,8 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
           remoteTexture.wrapT = THREE.ClampToEdgeWrapping;
           remoteTexture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 3);
           material.map = remoteTexture;
-          material.bumpMap = visual.bump && planet.id !== 'terra' ? remoteTexture : undefined;
-          material.bumpScale = visual.bump && planet.id !== 'terra' ? Math.min(visual.bump, 0.045) : 0;
+          material.bumpMap = visual.bump ? remoteTexture : undefined;
+          material.bumpScale = visual.bump ? Math.min(visual.bump, 0.05) : 0;
           material.needsUpdate = true;
           activeTexture.dispose();
           activeTexture = remoteTexture;
@@ -562,14 +597,12 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
       }
 
       if (visual.atmosphere) {
-        const atmosphereGeo = new THREE.SphereGeometry(1.5, 36, 24);
-        const atmosphereMat = new THREE.MeshBasicMaterial({
-          color: visual.atmosphereColor,
-          transparent: true,
-          opacity: planet.id === 'venus' ? 0.11 : (planet.id === 'terra' ? 0.055 : 0.08),
-          side: THREE.BackSide,
-          depthWrite: false,
-        });
+        const atmosphereGeo = new THREE.SphereGeometry(1.515, compact ? 42 : 56, compact ? 28 : 36);
+        const atmosphereMat = createPlanetAtmosphereMaterial(
+          THREE,
+          visual.atmosphereColor,
+          visual.atmosphereIntensity ?? 0.14,
+        );
         planetMesh.add(new THREE.Mesh(atmosphereGeo, atmosphereMat));
       }
 
