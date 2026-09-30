@@ -4810,20 +4810,26 @@ select,
   color: rgba(255,255,255,.94) !important;
 }
 
-/* Netuno usa uma fotografia de disco completo do Voyager 2. O blend screen elimina o fundo preto do JPEG. */
+/* Netuno usa uma fotografia de disco completo do Voyager 2.
+   A máscara circular remove completamente o quadro escuro do JPEG. */
+.planet-orb-loop.is-netuno .planet-orb-loop-image {
+  width: 66px !important;
+  height: 66px !important;
+  overflow: visible !important;
+  border-radius: 50% !important;
+  transform: translateY(1px);
+}
 .planet-orb-loop.is-netuno .planet-orb-loop-image img {
   width: 66px !important;
   height: 66px !important;
   max-width: 66px !important;
   max-height: 66px !important;
   object-fit: contain !important;
+  border-radius: 50% !important;
   mix-blend-mode: screen !important;
-  filter: saturate(1.04) contrast(1.04) brightness(1.05) drop-shadow(0 5px 12px rgba(0,0,0,.18)) !important;
-}
-.planet-orb-loop.is-netuno .planet-orb-loop-image {
-  width: 66px !important;
-  height: 66px !important;
-  transform: translateY(1px);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 47%, transparent 72%) !important;
+  mask-image: radial-gradient(circle at center, #000 0 47%, transparent 72%) !important;
+  filter: saturate(1.04) contrast(1.04) brightness(1.08) drop-shadow(0 5px 12px rgba(0,0,0,.18)) !important;
 }
 
 /* Saturno usa uma imagem transparente própria e uma leve inclinação, sem alterar o planeta grande. */
