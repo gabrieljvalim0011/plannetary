@@ -31,7 +31,6 @@ Plannetary é uma experiência web interativa para explorar o Sistema Solar, com
 │   ├── docs/           # Changelogs das versões
 │   ├── package.json
 │   └── vite.config.js
-├── .env.example        # Variáveis opcionais, sem segredos
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -61,7 +60,7 @@ npm run preview
 
 O projeto **não versiona `.env`**. Nunca coloque chaves, tokens, senhas ou credenciais reais no repositório.
 
-Existe um `.env.example` apenas para documentar variáveis opcionais.
+O arquivo opcional `frontend/.env.example` documenta `VITE_MOON_PHASE_ENDPOINT`; sem essa variável, a aplicação usa o cálculo lunar local.
 
 ## 🌙 Fase lunar
 
