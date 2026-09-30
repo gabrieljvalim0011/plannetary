@@ -21,7 +21,23 @@ export default function MoonPanel({ phase, onClose }) {
   const illumination = Number.isFinite(phase?.illumination) ? phase.illumination : null;
   const [previewPhase, setPreviewPhase] = useState(livePhase);
   const [previewPhenomenon, setPreviewPhenomenon] = useState(null);
-  const orbital = useMemo(() => getMoonOrbitalEvents(new Date()), []);
+  const [now, setNow] = useState(() => new Date());
+  const orbital = useMemo(() => getMoonOrbitalEvents(now), [now]);
+
+  useEffect(() => {
+    if (document.visibilityState !== 'visible') return undefined;
+    let active = true;
+    const tick = () => {
+      if (active && document.visibilityState === 'visible') setNow(new Date());
+    };
+    const interval = window.setInterval(tick, 30000);
+    document.addEventListener('visibilitychange', tick);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', tick);
+    };
+  }, []);
   const cycle = 29.530588853;
   const cycleProgress = Number.isFinite(phase?.age)
     ? Math.min(100, Math.max(0, (phase.age / cycle) * 100))
