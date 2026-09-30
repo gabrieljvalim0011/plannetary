@@ -6243,3 +6243,224 @@ select,
     height: 56vw !important;
   }
 }
+
+
+/* Plannetary 2.0.16 — Netuno alinhado + zoom de imagens da Central de Missões. */
+.planet-orb-loop.is-netuno .planet-orb-loop-image {
+  transform: translateY(-4px) !important;
+}
+
+.mission-image-zoom-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.mission-image-zoom-trigger img {
+  pointer-events: none;
+}
+
+.mission-image-zoom-hint {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+  background: rgba(3,5,10,.54);
+  color: rgba(255,255,255,.78);
+  font-size: .9rem;
+  line-height: 1;
+  opacity: .82;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, background-color .2s ease;
+}
+
+.mission-image-zoom-trigger:hover .mission-image-zoom-hint,
+.mission-image-zoom-trigger:focus-visible .mission-image-zoom-hint {
+  opacity: 1;
+  transform: scale(1.04);
+  background: rgba(3,5,10,.72);
+}
+
+.mission-image-zoom-trigger:focus-visible {
+  outline: 2px solid rgba(177,201,255,.55);
+  outline-offset: -4px;
+}
+
+.mission-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(1,3,8,.94);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: missionLightboxIn .2s ease-out both;
+  overscroll-behavior: contain;
+}
+
+.mission-image-lightbox-frame {
+  position: relative;
+  width: min(1100px, 94vw);
+  height: min(86vh, 900px);
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+.mission-image-lightbox-frame > img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 40px 110px rgba(0,0,0,.58);
+}
+
+.mission-image-lightbox-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 4px 0;
+  background: linear-gradient(180deg, transparent, rgba(1,3,8,.88) 70%);
+  color: rgba(255,255,255,.76);
+  pointer-events: none;
+}
+
+.mission-image-lightbox-caption strong {
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.mission-image-lightbox-caption span {
+  max-width: 58%;
+  color: rgba(255,255,255,.40);
+  font-size: .52rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.mission-image-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  background: rgba(3,5,10,.64);
+  color: rgba(255,255,255,.88);
+  font: inherit;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.mission-image-lightbox-close:hover {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.25);
+  transform: scale(1.04);
+}
+
+.mission-image-lightbox-close:focus-visible {
+  outline: 2px solid rgba(177,201,255,.64);
+  outline-offset: 4px;
+}
+
+@keyframes missionLightboxIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 860px) {
+  .planet-orb-loop.is-netuno .planet-orb-loop-image {
+    transform: translateY(-4px) !important;
+  }
+
+  .mission-image-zoom-hint {
+    top: 10px;
+    right: 10px;
+    width: 27px;
+    height: 27px;
+    font-size: .82rem;
+    background: rgba(3,5,10,.58);
+  }
+
+  .mission-image-lightbox {
+    padding: 12px;
+    background: rgba(1,3,8,.97);
+  }
+
+  .mission-image-lightbox-frame {
+    width: 100%;
+    height: min(82vh, 720px);
+  }
+
+  .mission-image-lightbox-frame > img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+  }
+
+  .mission-image-lightbox-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    bottom: -2px;
+    padding-top: 48px;
+  }
+
+  .mission-image-lightbox-caption span {
+    max-width: 100%;
+    text-align: left;
+    font-size: .48rem;
+  }
+
+  .mission-image-lightbox-close {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-image-lightbox,
+  .mission-image-zoom-hint {
+    animation: none !important;
+    transition: none !important;
+  }
+}
