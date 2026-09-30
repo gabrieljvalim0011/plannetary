@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { missionCatalog } from '../astronomy/missionCatalog.js';
 
 const FILTERS = [
@@ -19,6 +19,10 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   const [selectedMissionId, setSelectedMissionId] = useState(allMissions[0]?.id || 'featured');
   const [imageIndex, setImageIndex] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
+  const [zoomScale, setZoomScale] = useState(1);
+  const [zoomOffset, setZoomOffset] = useState({ x: 0, y: 0 });
+  const zoomPointersRef = useRef(new Map());
+  const zoomGestureRef = useRef({ mode: 'none', startDistance: 0, startScale: 1, lastX: 0, lastY: 0 });
 
   useEffect(() => {
     const list = missionCatalog[planet.id] || [];
@@ -39,6 +43,9 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   useEffect(() => {
     setImageIndex(0);
     setZoomOpen(false);
+    setZoomScale(1);
+    setZoomOffset({ x: 0, y: 0 });
+    zoomPointersRef.current.clear();
   }, [selectedMissionId]);
 
   useEffect(() => {
@@ -49,6 +56,99 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [zoomOpen]);
+
+  function resetZoom() {
+    setZoomScale(1);
+    setZoomOffset({ x: 0, y: 0 });
+  }
+
+  function closeZoom() {
+    setZoomOpen(false);
+    resetZoom();
+    zoomPointersRef.current.clear();
+  }
+
+  function handleZoomWheel(event) {
+    event.preventDefault();
+    const delta = event.deltaY > 0 ? -0.18 : 0.18;
+    setZoomScale((current) => Math.min(4, Math.max(1, current + delta)));
+  }
+
+  function getPointerDistance() {
+    const pointers = Array.from(zoomPointersRef.current.values());
+    if (pointers.length < 2) return 0;
+    const a = pointers[0];
+    const b = pointers[1];
+    return Math.hypot(b.x - a.x, b.y - a.y);
+  }
+
+  function handleZoomPointerDown(event) {
+    event.stopPropagation();
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+    zoomPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (zoomPointersRef.current.size === 2) {
+      zoomGestureRef.current = {
+        mode: 'pinch',
+        startDistance: getPointerDistance(),
+        startScale: zoomScale,
+        lastX: event.clientX,
+        lastY: event.clientY,
+      };
+      return;
+    }
+
+    if (zoomScale > 1) {
+      zoomGestureRef.current = {
+        mode: 'pan',
+        startDistance: 0,
+        startScale: zoomScale,
+        lastX: event.clientX,
+        lastY: event.clientY,
+      };
+    }
+  }
+
+  function handleZoomPointerMove(event) {
+    if (!zoomPointersRef.current.has(event.pointerId)) return;
+    zoomPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (zoomPointersRef.current.size >= 2) {
+      const gesture = zoomGestureRef.current;
+      const distance = getPointerDistance();
+      if (!gesture.startDistance || !distance) return;
+      const nextScale = Math.min(4, Math.max(1, gesture.startScale * (distance / gesture.startDistance)));
+      setZoomScale(nextScale);
+      if (nextScale <= 1.02) setZoomOffset({ x: 0, y: 0 });
+      return;
+    }
+
+    if (zoomGestureRef.current.mode !== 'pan' || zoomScale <= 1) return;
+    const gesture = zoomGestureRef.current;
+    const dx = event.clientX - gesture.lastX;
+    const dy = event.clientY - gesture.lastY;
+    gesture.lastX = event.clientX;
+    gesture.lastY = event.clientY;
+    setZoomOffset((current) => ({
+      x: current.x + dx,
+      y: current.y + dy,
+    }));
+  }
+
+  function handleZoomPointerUp(event) {
+    zoomPointersRef.current.delete(event.pointerId);
+    if (zoomPointersRef.current.size < 2) {
+      zoomGestureRef.current.mode = zoomScale > 1 ? 'pan' : 'none';
+      zoomGestureRef.current.startDistance = 0;
+    }
+  }
+
+  function handleZoomDoubleClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (zoomScale > 1) resetZoom();
+    else setZoomScale(2);
+  }
 
   if (!selectedMission) return null;
 
@@ -147,7 +247,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                 <button
                   type="button"
                   className="mission-image-zoom-trigger"
-                  onClick={(event) => { event.stopPropagation(); setZoomOpen(true); }}
+                  onClick={(event) => { event.stopPropagation(); resetZoom(); setZoomOpen(true); }}
                   aria-label={'Ampliar imagem da missão ' + selectedMission.name}
                   title="Ampliar imagem"
                 >
@@ -184,20 +284,43 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                 role="dialog"
                 aria-modal="true"
                 aria-label={'Imagem ampliada da missão ' + selectedMission.name}
-                onClick={() => setZoomOpen(false)}
+                onClick={(event) => {
+                  if (event.target === event.currentTarget) closeZoom();
+                }}
               >
                 <button
                   type="button"
                   className="mission-image-lightbox-close"
-                  onClick={(event) => { event.stopPropagation(); setZoomOpen(false); }}
+                  onClick={(event) => { event.stopPropagation(); closeZoom(); }}
                   aria-label="Fechar imagem ampliada"
                 >×</button>
-                <div className="mission-image-lightbox-frame" onClick={(event) => event.stopPropagation()}>
-                  <img src={selectedImage.src} alt={selectedImage.alt} decoding="async" />
+                <div
+                  className="mission-image-lightbox-frame"
+                  onClick={(event) => event.stopPropagation()}
+                  onWheel={handleZoomWheel}
+                  onPointerDown={handleZoomPointerDown}
+                  onPointerMove={handleZoomPointerMove}
+                  onPointerUp={handleZoomPointerUp}
+                  onPointerCancel={handleZoomPointerUp}
+                  onDoubleClick={handleZoomDoubleClick}
+                >
+                  <img
+                    className="mission-image-lightbox-image"
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    decoding="async"
+                    draggable="false"
+                    style={{
+                      transform: 'translate3d(-50%, -50%, 0) translate3d(' + zoomOffset.x + 'px, ' + zoomOffset.y + 'px, 0) scale(' + zoomScale + ')',
+                    }}
+                  />
                   <div className="mission-image-lightbox-caption">
                     <strong>{selectedMission.name}</strong>
                     <span>{selectedImage.credit || selectedMission.imageCredit || 'Fonte oficial'}</span>
                   </div>
+                  <span className="mission-image-lightbox-zoom-label" aria-hidden="true">
+                    {zoomScale > 1.01 ? Math.round(zoomScale * 100) + '%' : 'Toque duas vezes para ampliar'}
+                  </span>
                 </div>
               </div>
             ) : null}
