@@ -87,6 +87,8 @@ function selectByOffset(currentOffsets, selectedPlanetId, targetPlanetId, shift,
 
 function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
   const lockRef = useRef(false);
+  const touchStartXRef = useRef(null);
+  const stageRef = useRef(null);
   const currentIndexRef = useRef(0);
   const lastHandledIdRef = useRef(selectedPlanetId);
   const [railOffsets, setRailOffsets] = useState(() => {
@@ -113,6 +115,12 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
     lastHandledIdRef.current = selectedPlanetId;
     setRailOffsets(createRailOffsets(planets, selectedIndex));
   }, [planets, selectedIndex, selectedPlanetId]);
+
+  useEffect(() => {
+    if (window.innerWidth > 860 || !stageRef.current) return;
+    const selected = stageRef.current.querySelector('#planet-rail-loop-' + selectedPlanetId);
+    selected?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [selectedPlanetId]);
 
   const moveSelection = useCallback((direction) => {
     if (planets.length < 2) return;
@@ -153,6 +161,24 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
     }
   }, [moveSelection]);
 
+  const handleTouchStart = useCallback((event) => {
+    if (window.innerWidth > 860 || !event.touches?.length) return;
+    touchStartXRef.current = event.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((event) => {
+    if (window.innerWidth > 860 || touchStartXRef.current == null || !event.changedTouches?.length) return;
+    const deltaX = event.changedTouches[0].clientX - touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (Math.abs(deltaX) < 34 || lockRef.current) return;
+
+    lockRef.current = true;
+    moveSelection(deltaX < 0 ? 1 : -1);
+    window.setTimeout(() => {
+      lockRef.current = false;
+    }, RAIL_DEBOUNCE_MS);
+  }, [moveSelection]);
+
   const handlePlanetClick = useCallback((planet, relativeOffset) => {
     if (relativeOffset === 0) return;
 
@@ -177,6 +203,7 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
         <path d="M 63 38 C 50 104, 45 196, 45 260 C 45 324, 50 416, 63 482" />
       </svg>
       <div
+        ref={stageRef}
         className="planet-rail-loop-stage"
         role="listbox"
         tabIndex={0}
@@ -184,6 +211,8 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
         aria-activedescendant={`planet-rail-loop-${selectedPlanetId}`}
         onWheel={handleWheel}
         onKeyDown={handleKeyDown}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {planets.map((planet) => {
           const relativeIndex = railOffsets[planet.id] ?? 0;
