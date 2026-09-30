@@ -178,7 +178,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
           }, undefined, () => {});
         }
 
-        animated.push({ pivot, mesh, satellite, textureRef: () => activeTexture });
+        animated.push({ pivot, mesh, satellite, material, textureRef: () => activeTexture });
       });
 
       const ambient = new THREE.HemisphereLight(0x8ea8d0, 0x02030a, 0.45);
@@ -198,7 +198,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         if (cancelled) { running = false; return; }
         if (!visible || document.visibilityState === 'hidden') { running = false; return; }
         const delta = Math.min(clock.getDelta(), 0.05);
-        animated.forEach(({ pivot, mesh, satellite }) => {
+        animated.forEach(({ pivot, mesh, satellite, material }) => {
           pivot.rotation.y += delta * satellite.speed * 0.2;
           mesh.rotation.y += delta * 0.12;
           const selected = selectedRef.current === satellite.id;
