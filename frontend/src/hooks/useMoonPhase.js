@@ -140,14 +140,17 @@ export function useMoonPhase() {
         if (!phase) throw new Error('Fase lunar não reconhecida');
 
         const age = Number(item?.Age);
-        const illumination = Number(item?.Illumination);
+        const rawIllumination = Number(item?.Illumination);
+        const normalizedIllumination = Number.isFinite(rawIllumination)
+          ? (rawIllumination <= 1 ? rawIllumination * 100 : Math.min(100, rawIllumination))
+          : null;
         const safeAge = Number.isFinite(age) ? age : calculateLocalAge();
         const localCycle = phaseDetailsFromAge(safeAge);
         const nextMoon = {
           phase,
           label: phaseLabels[phase],
           age: safeAge,
-          illumination: Number.isFinite(illumination) ? illumination * 100 : fallbackDetails().illumination,
+          illumination: Number.isFinite(normalizedIllumination) ? normalizedIllumination : fallbackDetails().illumination,
           nextPhase: localCycle.nextPhase,
           previousPhase: localCycle.previousPhase,
           daysToNextPhase: localCycle.daysToNextPhase,
