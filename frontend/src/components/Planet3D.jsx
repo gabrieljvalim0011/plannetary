@@ -527,33 +527,7 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         }, undefined, () => {});
       }
 
-      // Earth's previous presentation looked too flat and overly dark. Keep the
-      // land/ocean map as the base and add a lightweight cloud shell for depth.
-      if (planet.id === 'terra') {
-        textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png', (remoteClouds) => {
-          if (cancelled) {
-            remoteClouds.dispose();
-            return;
-          }
-          remoteClouds.colorSpace = THREE.SRGBColorSpace;
-          remoteClouds.wrapS = THREE.RepeatWrapping;
-          remoteClouds.wrapT = THREE.ClampToEdgeWrapping;
-          remoteClouds.anisotropy = 2;
-          const cloudGeometry = new THREE.SphereGeometry(1.455, compact ? 40 : 48, compact ? 28 : 32);
-          const cloudMaterial = new THREE.MeshStandardMaterial({
-            map: remoteClouds,
-            transparent: true,
-            opacity: 0.30,
-            depthWrite: false,
-            roughness: 1,
-            metalness: 0,
-          });
-          cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
-          cloudMesh.renderOrder = 1;
-          cloudMesh.rotation.y = Math.PI * 0.02;
-          planetMesh.add(cloudMesh);
-        }, undefined, () => {});
-      }
+      // The selected Earth atmosphere texture already carries the global surface/cloud detail.
       const planetMesh = new THREE.Mesh(geometry, material);
       planetMesh.rotation.z = THREE.MathUtils.degToRad(visual.axialTilt || 0);
       if (planet.id === 'venus') planetMesh.rotation.z = THREE.MathUtils.degToRad(177.4);
@@ -610,7 +584,6 @@ function Planet3D({ planet, className = '', label = 'Modelo 3D interativo', comp
         }
         const delta = Math.min(clock.getDelta(), 0.05);
         planetMesh.rotation.y += delta * visual.rotation * 0.38;
-        if (cloudMesh) cloudMesh.rotation.y += delta * 0.015;
         controls.update();
         renderer.render(scene, camera);
         raf = window.requestAnimationFrame(render);
