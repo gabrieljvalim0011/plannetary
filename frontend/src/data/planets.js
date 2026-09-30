@@ -117,7 +117,7 @@ export const planets = [
     temperature: { meanC: -200, display: '-200 °C' }, distanceFromSun: { km: 4500000000, au: 30, display: '4,5 bilhões de km' },
     gravity: { value: 11.15, unit: 'm/s²' }, diameterKm: 49528, massKg: 102.4092e24, rotationPeriodHours: 0.67125 * 24, solarDayHours: 16.1, orbitalPeriodEarthDays: 164.79132 * 365.25,
     imageUrl: 'https://science.nasa.gov/wp-content/uploads/2024/03/pia01492-neptune-full-disk-16x9-1.jpg',
-    selectorImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/3D_Neptune.png/250px-3D_Neptune.png',
+    selectorImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Neptune_Full_%28original%29.jpg/500px-Neptune_Full_%28original%29.jpg',
     selectorImageSourcePage: 'https://commons.wikimedia.org/wiki/File:3D_Neptune.png',
     selectorImageCredit: 'Jcpag2012 / Wikimedia Commons (CC BY-SA 4.0)',
     imageSourcePage: 'https://science.nasa.gov/solar-system/neptune/', imageCredit: 'NASA/Voyager 2', factSource: 'https://science.nasa.gov/neptune/neptune-facts/', advanced: { axialTiltDeg: 28.3, density: 1.64, escapeVelocityKms: 23.5, atmosphere: 'Atmosfera de hidrogênio e hélio com metano; ventos e tempestades podem atingir velocidades extremas.', composition: 'Gigante de gelo com materiais ricos em água, amônia e metano acima de um núcleo rochoso.', magnetism: 'Possui um campo magnético forte, inclinado e deslocado em relação ao centro do planeta.', moons: 'Tritão é a maior e mais conhecida lua; o sistema também inclui luas menores.', rings: 'Anéis tênues e escuros' },
