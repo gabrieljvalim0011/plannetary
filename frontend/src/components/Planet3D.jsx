@@ -16,9 +16,9 @@ const NASA_3D_TEXTURES = {
   mercurio: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/mercury/preview.webp?w=1024',
   venus: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/venus/preview.webp?w=1024',
   // Use the local 2048×1024 Blue Marble derivative to avoid a multi-megabyte remote texture on every visit.
-  // Keep Earth's Blue Marble local so Vercel serves the same known-good asset as localhost.
-  // This avoids a remote texture request changing the appearance between environments.
-  terra: '/textures/earth-blue-marble.webp',
+  // Use the equirectangular Earth atmosphere map from the official Three.js planet texture set.
+  // It provides land, ocean and cloud detail that wraps correctly around SphereGeometry.
+  terra: 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
   marte: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/mars/preview.webp?w=1024',
   jupiter: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/jupiter/preview.webp?w=1024',
   saturno: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/3d/resources/image/saturn/preview.webp?w=1024',
