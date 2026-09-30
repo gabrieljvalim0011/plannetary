@@ -43,10 +43,7 @@ export default function MoonPanel({ phase, onClose }) {
   }
 
   function handleMoonSurfaceClick(event) {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    if (target.closest('.moon-screen-header, .moon-screen-content, .moon-screen-lower, .moon-missions')) return;
-    onClose?.();
+    if (event.target === event.currentTarget) onClose?.();
   }
 
   const isPreviewingPhase = !previewPhenomenon && previewPhase !== livePhase;
