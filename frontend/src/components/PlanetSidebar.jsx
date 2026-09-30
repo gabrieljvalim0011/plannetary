@@ -174,7 +174,7 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
   return (
     <aside className="planet-rail-loop" aria-label="Selecione um planeta">
       <svg className="planet-rail-loop-arc" viewBox="0 0 120 520" aria-hidden="true" focusable="false">
-        <path d="M 91 38 C 54 104, 45 196, 45 260 C 45 324, 54 416, 91 482" />
+        <path d="M 63 38 C 50 104, 45 196, 45 260 C 45 324, 50 416, 63 482" />
       </svg>
       <div
         className="planet-rail-loop-stage"
