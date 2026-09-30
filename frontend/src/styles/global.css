@@ -5214,3 +5214,246 @@ select,
   content-visibility: auto;
   contain-intrinsic-size: 320px;
 }
+
+
+/* Plannetary 2.0.11 — mobile: exploração no topo, dados detalhados abaixo. */
+@media (max-width: 860px) {
+  .immersive-app {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+  }
+
+  .immersive-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 78px 16px 108px !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Ordem mobile: seletor (fora do main) → planeta 3D + identidade → dados → extras. */
+  .planet-hero-transition {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  .planet-stats-transition {
+    order: 2 !important;
+    width: 100% !important;
+    margin-top: 18px !important;
+  }
+
+  .astronomical-overlay {
+    order: 3 !important;
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 18px 0 0 !important;
+  }
+
+  .lower-strip {
+    order: 4 !important;
+    margin-top: 26px !important;
+  }
+
+  /* O seletor deixa de ocupar uma área de conteúdo no fim da página. */
+  .planet-rail-loop {
+    position: absolute !important;
+    top: 76px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 62px !important;
+    transform: none !important;
+    padding: 0 !important;
+    z-index: 1000 !important;
+  }
+
+  .planet-rail-loop-stage {
+    height: 62px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0 14px !important;
+  }
+
+  .planet-orb-loop,
+  .planet-orb-loop.is-selected {
+    flex: 0 0 54px !important;
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .planet-orb-loop-image img {
+    width: 54px !important;
+    height: 54px !important;
+    max-width: 54px !important;
+    max-height: 54px !important;
+  }
+
+  .planet-orb-loop.is-saturn .planet-orb-loop-image,
+  .planet-orb-loop.is-saturn .planet-orb-loop-image img {
+    width: 94px !important;
+    height: 56px !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  .planet-orb-loop.is-saturn .planet-orb-loop-image {
+    left: -20px !important;
+  }
+
+  /* O bloco superior deixa de sobrepor texto ao planeta: modelo primeiro, identidade depois. */
+  .planet-scene {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .planet-scene .planet-haze,
+  .planet-scene .planet-horizon {
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  .planet-3d-stage {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: min(100%, 560px) !important;
+    height: min(92vw, 520px) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    order: 1 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .planet-hero-title {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: -8px 0 0 !important;
+    order: 2 !important;
+    z-index: 6 !important;
+  }
+
+  .planet-hero-title h1 {
+    margin-top: 6px !important;
+    font-size: clamp(3.6rem, 17vw, 6rem) !important;
+    line-height: .86 !important;
+  }
+
+  .planet-hero-title .planet-subtitle {
+    margin-left: 2px !important;
+    margin-top: 10px !important;
+  }
+
+  .planet-hero-title .planet-summary {
+    margin-left: 2px !important;
+    max-width: 100% !important;
+    margin-top: 9px !important;
+  }
+
+  .details-link {
+    margin-top: 15px !important;
+  }
+
+  .planet-credit {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 14px 0 0 !important;
+    order: 3 !important;
+  }
+
+  /* Dados ficam claramente separados da área de exploração. */
+  .planet-stats-transition .scene-stats {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 0 !important;
+    border-top: 1px solid rgba(255,255,255,.08) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+  }
+
+  .planet-stats-transition .scene-stat {
+    padding: 10px 12px !important;
+    text-align: left !important;
+  }
+
+  .planet-stats-transition .scene-stat:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,.08) !important;
+  }
+
+  .planet-stats-transition .scene-stat + .scene-stat::before {
+    display: none !important;
+  }
+
+  .planet-stats-transition .scene-stat span {
+    font-size: .49rem !important;
+    letter-spacing: .1em !important;
+    white-space: normal !important;
+  }
+
+  .planet-stats-transition .scene-stat strong {
+    margin-top: 6px !important;
+    font-size: clamp(.98rem, 4vw, 1.2rem) !important;
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .immersive-main {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .planet-rail-loop-stage {
+    padding: 0 10px !important;
+    gap: 6px !important;
+  }
+
+  .planet-orb-loop,
+  .planet-orb-loop.is-selected {
+    flex-basis: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .planet-orb-loop-image img {
+    width: 50px !important;
+    height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
+  }
+
+  .planet-3d-stage {
+    height: min(94vw, 450px) !important;
+  }
+
+  .planet-stats-transition .scene-stat {
+    padding: 10px 9px !important;
+  }
+}
