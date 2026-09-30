@@ -127,7 +127,7 @@ function PlanetExperience({ planet, planets, onSelectPlanet, onClose }) {
               <a href={planet.factSource} target="_blank" rel="noreferrer">Fonte científica ↗</a>
             </article>
 
-            <article className="planet-experience-card">
+            <article className="planet-experience-card planet-experience-profile">
               <span className="planet-experience-label">PERFIL</span>
               <div className="planet-experience-data-grid">
                 {profile.map(([label, value]) => (
