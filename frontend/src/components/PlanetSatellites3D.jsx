@@ -362,7 +362,7 @@ export default function PlanetSatellites3D({ planet, satellites = [], selectedId
         camera.aspect = nextWidth / nextHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(nextWidth, nextHeight, false);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, width < 760 ? 1 : 1.15));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, nextWidth < 760 ? 1 : 1.15));
       };
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(host);
