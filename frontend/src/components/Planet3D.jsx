@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const PLANET_VISUALS = {
   mercurio: { base: '#9c9992', atmosphere: false, rotation: 0.16, roughness: 0.96, bump: 0.07, axialTilt: 2 },
-  venus: { base: '#c9ad79', atmosphere: true, atmosphereColor: '#d7a96f', rotation: -0.08, roughness: 0.93, axialTilt: 177.4 },
+  venus: { base: '#c9ad79', atmosphere: true, atmosphereColor: '#d7a96f', rotation: -0.28, roughness: 0.93, axialTilt: 177.4 },
   terra: { base: '#4d78b8', atmosphere: true, atmosphereColor: '#6eb3ff', clouds: true, rotation: 0.22, roughness: 0.72, axialTilt: 23.4 },
   marte: { base: '#b45e3d', atmosphere: true, atmosphereColor: '#d07b59', rotation: 0.19, roughness: 0.94, bump: 0.06, axialTilt: 25.2 },
   jupiter: { base: '#c9a47c', clouds: true, rotation: 0.38, roughness: 0.84, axialTilt: 3.1 },
   saturno: { base: '#cdbd98', clouds: true, rings: true, rotation: 0.31, roughness: 0.86, axialTilt: 26.7 },
-  urano: { base: '#7cbaca', atmosphere: true, atmosphereColor: '#72d5e5', rotation: -0.17, roughness: 0.8, axialTilt: 97.8 },
+  urano: { base: '#7cbaca', atmosphere: true, atmosphereColor: '#72d5e5', rotation: -0.28, roughness: 0.8, axialTilt: 97.8 },
   netuno: { base: '#3d65bc', atmosphere: true, atmosphereColor: '#4f82e9', rotation: 0.2, roughness: 0.82, axialTilt: 28.3 },
 };
 
