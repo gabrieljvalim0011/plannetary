@@ -19,9 +19,9 @@ export const planets = [
     temperature: { meanC: 167, display: '167 °C' }, distanceFromSun: { km: 58000000, au: 0.39, display: '58 milhões de km' },
     gravity: { value: 3.70, unit: 'm/s²' }, diameterKm: 4879, massKg: 0.330103e24, rotationPeriodHours: 58.6462 * 24, solarDayHours: 4222.6, orbitalPeriodEarthDays: 0.2408467 * 365.25,
     imageUrl: 'https://science.nasa.gov/wp-content/uploads/2024/03/pia15162-mercury-basins-messenger-16x9-1.jpg',
-    selectorImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Planet_Mercury_-_GPN-2000-000465_-_transparent.png/250px-Planet_Mercury_-_GPN-2000-000465_-_transparent.png',
-    selectorImageSourcePage: 'https://commons.wikimedia.org/wiki/File:Planet_Mercury_-_GPN-2000-000465_-_transparent.png',
-    selectorImageCredit: 'NASA/JPL/USGS',
+    selectorImageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15163/PIA15163.jpg?crop=faces%2Cfocalpoint&fit=clip&h=600&w=600',
+    selectorImageSourcePage: 'https://science.nasa.gov/photojournal/mercury-globe-0n-270e/',
+    selectorImageCredit: 'NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington',
     imageSourcePage: 'https://science.nasa.gov/solar-system/mercury/', imageCredit: 'NASA/MESSENGER', factSource: 'https://science.nasa.gov/mercury/facts/', advanced: { axialTiltDeg: 2, density: 5.43, escapeVelocityKms: 4.25, atmosphere: 'Exosfera extremamente tênue, dominada por oxigênio, sódio, hidrogênio, hélio e potássio.', composition: 'Núcleo metálico muito grande, cercado por manto e crosta rochosos.', magnetism: 'Possui um campo magnético global fraco, associado ao seu núcleo parcialmente líquido.', moons: 'Nenhuma', rings: 'Nenhum' },
     accent: '#b9b4ad', glow: 'rgba(190,190,185,.33)'
   },
