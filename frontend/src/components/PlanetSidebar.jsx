@@ -128,9 +128,6 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
     const nextIndex = wrapIndex(currentIndex + direction, planets.length);
     const nextPlanet = planets[nextIndex];
 
-    const currentOffsets = railOffsetsRef.current;
-    const wrappedPlanet = planets.find((planet) => (currentOffsets[planet.id] ?? 0) === (direction > 0 ? RAIL_MIN_OFFSET : RAIL_MAX_OFFSET));
-
     currentIndexRef.current = nextIndex;
     lastHandledIdRef.current = nextPlanet.id;
     setRailOffsets((offsets) => shiftRailOffsets(offsets, direction, planets.length));
