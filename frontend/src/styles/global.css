@@ -4823,6 +4823,7 @@ select,
 .planet-orb-loop.is-netuno .planet-orb-loop-image {
   width: 66px !important;
   height: 66px !important;
+  transform: translateY(1px);
 }
 
 /* Saturno usa uma imagem transparente própria e uma leve inclinação, sem alterar o planeta grande. */
