@@ -6491,7 +6491,7 @@ select,
   max-height: calc(100vh - 90px) !important;
   margin: 0 !important;
   padding: 0 !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%);
   object-fit: contain !important;
 }
 
@@ -6516,5 +6516,71 @@ select,
 
   .mission-image-lightbox-caption {
     width: calc(100vw - 24px) !important;
+  }
+}
+
+
+/* Plannetary 2.0.18 — zoom real da imagem, sem zoom da página. */
+.mission-image-lightbox-frame {
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  overscroll-behavior: contain !important;
+}
+
+.mission-image-lightbox-image {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 90px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform-origin: center center !important;
+  object-fit: contain !important;
+  cursor: grab !important;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+.mission-image-lightbox-image:active {
+  cursor: grabbing !important;
+}
+
+.mission-image-lightbox-zoom-label {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+  transform: translateX(-50%);
+  z-index: 4;
+  max-width: calc(100% - 120px);
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 999px;
+  background: rgba(3,5,10,.52);
+  color: rgba(255,255,255,.48);
+  font-size: .48rem;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .mission-image-lightbox-frame {
+    touch-action: none !important;
+  }
+
+  .mission-image-lightbox-image {
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100dvh - 82px) !important;
+  }
+
+  .mission-image-lightbox-zoom-label {
+    top: 12px;
+    font-size: .45rem;
   }
 }
