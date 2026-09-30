@@ -6584,3 +6584,49 @@ select,
     font-size: .45rem;
   }
 }
+
+
+/* Plannetary 2.0.19 — painel de detalhes sempre acima da cena inteira. */
+.planet-experience {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 4600 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  background: #03050b !important;
+  background-color: #03050b !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  isolation: isolate !important;
+}
+
+.planet-experience::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -4;
+  background: #03050b;
+  pointer-events: none;
+}
+
+.planet-experience-backdrop,
+.planet-experience-sheen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+}
+
+@media (max-width: 860px) {
+  .planet-experience {
+    z-index: 4600 !important;
+    min-height: 100dvh !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain !important;
+  }
+}
