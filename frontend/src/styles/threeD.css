@@ -352,3 +352,205 @@
     padding: 9px 11px;
   }
 }
+
+
+/* Plannetary 2.0.22 — zoom das luas + ficha detalhada da lua selecionada. */
+.planet-satellites-3d-wrap {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.planet-satellites-3d-wrap .planet-satellites-3d {
+  width: 100%;
+  height: 100%;
+}
+
+.planet-satellites-zoom-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  display: inline-flex;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 999px;
+  background: rgba(3,5,10,.56);
+  opacity: .82;
+}
+
+.planet-satellites-zoom-controls button {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.78);
+  font: inherit;
+  font-size: .68rem;
+  font-weight: 750;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.planet-satellites-zoom-controls button:hover {
+  background: rgba(255,255,255,.11);
+  color: #fff;
+}
+
+.planet-satellites-zoom-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 4;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.27);
+  font-size: .43rem;
+  font-weight: 800;
+  letter-spacing: .10em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.planet-satellite-detail {
+  margin-top: 6px;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.planet-satellite-detail-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.planet-satellite-detail-heading > div {
+  min-width: 0;
+}
+
+.planet-satellite-detail-heading span,
+.planet-satellite-highlight span {
+  display: block;
+  color: var(--planet-accent);
+  font-size: .46rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.planet-satellite-detail-heading strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.planet-satellite-detail-heading > small {
+  flex: 0 1 48%;
+  color: rgba(255,255,255,.35);
+  font-size: .49rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.planet-satellite-detail > p {
+  margin: 9px 0 0;
+  color: rgba(255,255,255,.48);
+  font-size: .57rem;
+  line-height: 1.55;
+}
+
+.planet-satellite-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0;
+  margin-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.planet-satellite-detail-stats > div {
+  padding: 9px 8px 9px 0;
+  min-width: 0;
+}
+
+.planet-satellite-detail-stats > div + div {
+  padding-left: 10px;
+  border-left: 1px solid rgba(255,255,255,.06);
+}
+
+.planet-satellite-detail-stats span {
+  display: block;
+  color: rgba(255,255,255,.29);
+  font-size: .43rem;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+.planet-satellite-detail-stats strong {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255,255,255,.78);
+  font-size: .58rem;
+}
+
+.planet-satellite-highlight {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border-left: 2px solid rgba(151,184,255,.48);
+  background: rgba(151,184,255,.035);
+}
+
+.planet-satellite-highlight strong {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255,255,255,.57);
+  font-size: .53rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+  .planet-satellites-3d-wrap {
+    height: 270px;
+  }
+
+  .planet-satellites-zoom-controls {
+    top: 9px;
+    right: 9px;
+    opacity: .94;
+  }
+
+  .planet-satellites-zoom-controls button {
+    min-width: 36px;
+    height: 32px;
+  }
+
+  .planet-satellites-zoom-hint {
+    bottom: 8px;
+    font-size: .39rem;
+  }
+
+  .planet-satellite-detail-heading {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .planet-satellite-detail-heading > small {
+    max-width: none;
+    text-align: left;
+  }
+
+  .planet-satellite-detail > p {
+    font-size: .59rem;
+    line-height: 1.58;
+  }
+
+  .planet-satellite-detail-stats > div {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
