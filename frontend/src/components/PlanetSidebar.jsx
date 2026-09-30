@@ -173,7 +173,9 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
 
   return (
     <aside className="planet-rail-loop" aria-label="Selecione um planeta">
-      <div className="planet-rail-loop-arc" aria-hidden="true" />
+      <svg className="planet-rail-loop-arc" viewBox="0 0 120 520" aria-hidden="true" focusable="false">
+        <path d="M 91 38 C 54 104, 45 196, 45 260 C 45 324, 54 416, 91 482" />
+      </svg>
       <div
         className="planet-rail-loop-stage"
         role="listbox"
@@ -187,10 +189,10 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
           const relativeIndex = railOffsets[planet.id] ?? 0;
           const selected = planet.id === selectedPlanetId;
           const distance = Math.abs(relativeIndex);
-          const y = relativeIndex * 68;
-          const normalizedY = Math.min(1, Math.abs(y) / 255);
+          const y = relativeIndex * 64;
+          const normalizedY = Math.min(1, Math.abs(y) / 224);
           const curve = Math.sqrt(Math.max(0, 1 - normalizedY * normalizedY));
-          const x = 31 + 55 * (1 - curve);
+          const x = 45 + 36 * (1 - curve);
           const scale = selected ? 1.12 : Math.max(0.82, 0.98 - distance * 0.035);
           const opacity = selected ? 1 : Math.max(0.52, 0.82 - distance * 0.055);
           const selectorImageUrl = planet.selectorImageUrl || planet.imageUrl;
@@ -201,7 +203,7 @@ function PlanetRailView({ planets, selectedPlanetId, onSelect }) {
               id={`planet-rail-loop-${planet.id}`}
               type="button"
               role="option"
-              className={`planet-orb-loop ${selected ? 'is-selected' : ''} ${planet.id === 'saturno' ? 'is-saturn' : ''}`}
+              className={`planet-orb-loop ${selected ? 'is-selected' : ''} ${planet.id === 'saturno' ? 'is-saturn' : ''} ${planet.id === 'netuno' ? 'is-netuno' : ''}`}
               onClick={() => handlePlanetClick(planet, relativeIndex)}
               aria-label={`Explorar ${planet.name}`}
               aria-selected={selected}
