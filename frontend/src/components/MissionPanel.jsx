@@ -18,6 +18,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   const [filter, setFilter] = useState('all');
   const [selectedMissionId, setSelectedMissionId] = useState(allMissions[0]?.id || 'featured');
   const [imageIndex, setImageIndex] = useState(0);
+  const [zoomOpen, setZoomOpen] = useState(false);
 
   useEffect(() => {
     const list = missionCatalog[planet.id] || [];
@@ -35,7 +36,19 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   const selectedImage = gallery[imageIndex] || gallery[0];
   const titleIsLong = (selectedMission?.name?.length || 0) >= 11;
 
-  useEffect(() => setImageIndex(0), [selectedMissionId]);
+  useEffect(() => {
+    setImageIndex(0);
+    setZoomOpen(false);
+  }, [selectedMissionId]);
+
+  useEffect(() => {
+    if (!zoomOpen) return undefined;
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') setZoomOpen(false);
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [zoomOpen]);
 
   if (!selectedMission) return null;
 
@@ -130,7 +143,25 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
           <div className="mission-media-column">
             <div className={`mission-screen-visual ${selectedImage ? 'has-image' : 'is-empty'}`}>
               <div className="mission-visual-backdrop" aria-hidden="true" />
-              {selectedImage ? <img src={selectedImage.src} alt={selectedImage.alt} loading="eager" fetchPriority="high" decoding="async" onError={(event) => { event.currentTarget.style.opacity = '0'; }} /> : <div className="mission-image-placeholder"><span>Imagem da missão</span><strong>Consulte a fonte oficial para o acervo visual disponível.</strong></div>}
+              {selectedImage ? (
+                <button
+                  type="button"
+                  className="mission-image-zoom-trigger"
+                  onClick={(event) => { event.stopPropagation(); setZoomOpen(true); }}
+                  aria-label={'Ampliar imagem da missão ' + selectedMission.name}
+                  title="Ampliar imagem"
+                >
+                  <img
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    onError={(event) => { event.currentTarget.style.opacity = '0'; }}
+                  />
+                  <span className="mission-image-zoom-hint" aria-hidden="true">⤢</span>
+                </button>
+              ) : <div className="mission-image-placeholder"><span>Imagem da missão</span><strong>Consulte a fonte oficial para o acervo visual disponível.</strong></div>}
               <div className="mission-visual-caption">
                 <span>MISSÃO · {planet.name.toUpperCase()}</span>
                 <strong>{selectedMission.name}</strong>
@@ -145,6 +176,29 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                     <img src={item.src} alt="" loading="lazy" decoding="async" width="76" height="56" />
                   </button>
                 ))}
+              </div>
+            ) : null}
+            {zoomOpen && selectedImage ? (
+              <div
+                className="mission-image-lightbox"
+                role="dialog"
+                aria-modal="true"
+                aria-label={'Imagem ampliada da missão ' + selectedMission.name}
+                onClick={() => setZoomOpen(false)}
+              >
+                <button
+                  type="button"
+                  className="mission-image-lightbox-close"
+                  onClick={(event) => { event.stopPropagation(); setZoomOpen(false); }}
+                  aria-label="Fechar imagem ampliada"
+                >×</button>
+                <div className="mission-image-lightbox-frame" onClick={(event) => event.stopPropagation()}>
+                  <img src={selectedImage.src} alt={selectedImage.alt} decoding="async" />
+                  <div className="mission-image-lightbox-caption">
+                    <strong>{selectedMission.name}</strong>
+                    <span>{selectedImage.credit || selectedMission.imageCredit || 'Fonte oficial'}</span>
+                  </div>
+                </div>
               </div>
             ) : null}
           </div>
