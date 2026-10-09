@@ -292,6 +292,16 @@ const extraMissionMedia = {
     imageCredit: 'NASA',
     gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20Saturn.jpg', alt: 'Imagem de Saturno registrada durante a missão Pioneer 11', credit: 'NASA', kind: 'photo' }],
   },
+  'venus-express': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20%2853672036164%29.png',
+    imageCredit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20%2853672036164%29.png', alt: 'Imagem científica da atmosfera de Vênus obtida pela missão Venus Express', credit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)', kind: 'photo' }],
+  },
+  mro: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Mars Reconnaissance Orbiter', credit: 'NASA', kind: 'concept' }],
+  },
   dragonfly: {
     imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/06/header-whatdragonfly.png',
     imageCredit: 'NASA/Johns Hopkins APL',
