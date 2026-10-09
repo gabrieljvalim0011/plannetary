@@ -310,7 +310,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
 
             <div className="mission-screen-footer">
               <a href={selectedMission.sourceUrl} target="_blank" rel="noreferrer">Fonte oficial ↗</a>
-              <span className="mission-image-credit">Imagem: {selectedImage?.credit || selectedMission.imageCredit || 'fonte oficial'}</span>
+              <span className="mission-image-credit">Imagem: {selectedImage?.credit || selectedMission.imageCredit || 'fonte oficial'}{selectedMission.imageReferenceOnly ? ' · imagem de referência, não específica desta missão' : ''}</span>
             </div>
           </div>
 
@@ -339,7 +339,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
               <div className="mission-visual-caption">
                 <span>MISSÃO · {planet.name.toUpperCase()}</span>
                 <strong>{selectedMission.name}</strong>
-                <small className="mission-media-kind">{selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage ? 'IMAGEM DA MISSÃO' : 'SEM IMAGEM CARREGADA'}</small>
+                <small className="mission-media-kind">{selectedImage?.kind === 'reference' ? 'IMAGEM DE REFERÊNCIA · NÃO ESPECÍFICA DA MISSÃO' : selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage ? 'IMAGEM DA MISSÃO' : 'SEM IMAGEM CARREGADA'}</small>
                 {gallery.length > 1 ? <small>{imageIndex + 1} / {gallery.length} imagens</small> : null}
               </div>
             </div>
