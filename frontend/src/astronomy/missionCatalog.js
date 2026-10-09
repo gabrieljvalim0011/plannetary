@@ -164,7 +164,6 @@ const extraMissions = {
       highlights: ['Descobriu vulcões ativos em Io', 'Revelou um anel de Júpiter', 'Imagens detalhadas das luas'],
       timeline: ['1977 · lançamento', '1979 · encontro com Júpiter'],
     },
-  ],
     {
       id: 'voyager-2-jupiter', name: 'Voyager 2', status: 'Histórica · sobrevoo 1979', category: 'historical', type: 'Sobrevoo planetário',
       target: 'Júpiter', partners: 'NASA / JPL', launch: '20 ago. 1977', milestone: 'Sobrevoo: 9 jul. 1979', location: 'Júpiter e suas luas',
@@ -176,6 +175,7 @@ const extraMissions = {
       highlights: ['Segundo sobrevoo Voyager de Júpiter', 'Observou Io e suas erupções vulcânicas', 'Seguiu depois para Saturno em 1981'],
       timeline: ['1977 · lançamento', '1979 · encontro com Júpiter', '1981 · encontro com Saturno'],
     },
+  ],
   saturno: [
     {
       id: 'voyager-1-saturn', name: 'Voyager 1', status: 'Histórica · sobrevoo 1980', category: 'historical', type: 'Sobrevoo planetário',
