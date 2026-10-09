@@ -8,9 +8,18 @@ const FILTERS = [
   { id: 'historical', label: 'Históricas' },
 ];
 
-function missionImageFallback(mission, index = 0) {
-  const image = mission?.gallery?.[index] || mission?.gallery?.[0];
-  return image?.src || mission?.imageUrl || null;
+function missionImageCandidates(src) {
+  if (!src) return [];
+  const candidates = [src];
+  const cleanUrl = src.split('?')[0];
+  if (cleanUrl !== src) candidates.push(cleanUrl);
+
+  // NASA's legacy Photojournal IDs also have a stable image endpoint.
+  const nasaId = cleanUrl.match(/\b(PIA\d{5,})\.(?:jpg|jpeg|png)$/i)?.[1];
+  if (nasaId && cleanUrl.includes('assets.science.nasa.gov')) {
+    candidates.push(`https://images-assets.nasa.gov/image/${nasaId}/${nasaId}~orig.jpg`);
+  }
+  return [...new Set(candidates)];
 }
 
 export default function MissionPanel({ planet, planets = [], selectedPlanetId, onSelectPlanet, onClose }) {
@@ -18,6 +27,8 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   const [filter, setFilter] = useState('all');
   const [selectedMissionId, setSelectedMissionId] = useState(allMissions[0]?.id || 'featured');
   const [imageIndex, setImageIndex] = useState(0);
+  const [imageSrcOverrides, setImageSrcOverrides] = useState({});
+  const [failedImageSources, setFailedImageSources] = useState(() => new Set());
   const [zoomOpen, setZoomOpen] = useState(false);
   const [zoomScale, setZoomScale] = useState(1);
   const [zoomOffset, setZoomOffset] = useState({ x: 0, y: 0 });
@@ -29,6 +40,8 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
     setSelectedMissionId(list[0]?.id || 'featured');
     setFilter('all');
     setImageIndex(0);
+    setImageSrcOverrides({});
+    setFailedImageSources(new Set());
   }, [planet.id]);
 
   const visibleMissions = useMemo(() => {
@@ -38,10 +51,14 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
   const selectedMission = allMissions.find((item) => item.id === selectedMissionId) || visibleMissions[0] || allMissions[0];
   const gallery = useMemo(() => selectedMission?.gallery?.length ? selectedMission.gallery : (selectedMission?.imageUrl ? [{ src: selectedMission.imageUrl, alt: selectedMission.name, credit: selectedMission.imageCredit, kind: 'photo' }] : []), [selectedMission]);
   const selectedImage = gallery[imageIndex] || gallery[0];
+  const selectedImageSrc = selectedImage ? (imageSrcOverrides[selectedImage.src] || selectedImage.src) : null;
+  const selectedImageAvailable = Boolean(selectedImage && !failedImageSources.has(selectedImage.src));
   const titleIsLong = (selectedMission?.name?.length || 0) >= 11;
 
   useEffect(() => {
     setImageIndex(0);
+    setImageSrcOverrides({});
+    setFailedImageSources(new Set());
     setZoomOpen(false);
     setZoomScale(1);
     setZoomOffset({ x: 0, y: 0 });
@@ -96,6 +113,23 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
       document.body.style.touchAction = previousBodyTouchAction;
     };
   }, [zoomOpen]);
+
+  function handleMissionImageError(event, image) {
+    if (!image?.src) return;
+    const currentSrc = event.currentTarget.currentSrc || event.currentTarget.src;
+    const candidates = missionImageCandidates(image.src);
+    const currentIndex = candidates.findIndex((candidate) => candidate === currentSrc || candidate === event.currentTarget.src);
+    const nextSrc = candidates[currentIndex + 1];
+
+    if (nextSrc) {
+      setImageSrcOverrides((current) => ({ ...current, [image.src]: nextSrc }));
+      return;
+    }
+
+    setFailedImageSources((current) => new Set(current).add(image.src));
+    const nextAvailable = gallery.findIndex((item) => item.src !== image.src && !failedImageSources.has(item.src));
+    if (nextAvailable >= 0) setImageIndex(nextAvailable);
+  }
 
   function resetZoom() {
     setZoomScale(1);
@@ -283,7 +317,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
           <div className="mission-media-column">
             <div className={`mission-screen-visual ${selectedImage ? 'has-image' : 'is-empty'}`}>
               <div className="mission-visual-backdrop" aria-hidden="true" />
-              {selectedImage ? (
+              {selectedImageAvailable ? (
                 <button
                   type="button"
                   className="mission-image-zoom-trigger"
@@ -292,12 +326,12 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                   title="Ampliar imagem"
                 >
                   <img
-                    src={selectedImage.src}
+                    src={selectedImageSrc}
                     alt={selectedImage.alt}
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
-                    onError={(event) => { event.currentTarget.style.opacity = '0'; }}
+                    onError={(event) => handleMissionImageError(event, selectedImage)}
                   />
                   <span className="mission-image-zoom-hint" aria-hidden="true">⤢</span>
                 </button>
@@ -318,7 +352,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                 ))}
               </div>
             ) : null}
-            {zoomOpen && selectedImage ? (
+            {zoomOpen && selectedImageAvailable ? (
               <div
                 className="mission-image-lightbox"
                 role="dialog"
@@ -346,10 +380,11 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
                 >
                   <img
                     className="mission-image-lightbox-image"
-                    src={selectedImage.src}
+                    src={selectedImageSrc}
                     alt={selectedImage.alt}
                     decoding="async"
                     draggable="false"
+                    onError={(event) => handleMissionImageError(event, selectedImage)}
                     style={{
                       transform: 'translate3d(-50%, -50%, 0) translate3d(' + zoomOffset.x + 'px, ' + zoomOffset.y + 'px, 0) scale(' + zoomScale + ')',
                     }}
