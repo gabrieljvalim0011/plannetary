@@ -223,25 +223,8 @@ export const missionCatalog = Object.fromEntries(
       ...featured,
     };
 
-    // Older catalog entries have mission facts but no dedicated media. Keep the
-    // panel visual instead of rendering an empty frame, and label this honestly
-    // as reference imagery rather than implying it depicts the selected craft.
-    const referenceGallery = (featured.gallery || []).map((image) => ({
-      ...image,
-      alt: `Imagem de referência do sistema de ${featured.target}; não representa necessariamente a espaçonave selecionada.`,
-      kind: 'reference',
-    }));
-    const missions = (extraMissions[planetId] || []).map((mission) => {
-      if (mission.gallery?.length || mission.imageUrl) return mission;
-      if (!referenceGallery.length) return mission;
-      return {
-        ...mission,
-        gallery: referenceGallery,
-        imageCredit: featured.imageCredit,
-        imageReferenceOnly: true,
-      };
-    });
-
-    return [planetId, [featuredMission, ...missions]];
+    // Do not reuse the featured mission's gallery for other spacecraft.
+    // Each mission must display its own media, or the panel's explicit no-image state.
+    return [planetId, [featuredMission, ...(extraMissions[planetId] || [])]];
   })
 );
