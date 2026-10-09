@@ -216,96 +216,98 @@ const extraMissions = {
 };
 
 
+const nasaPhoto = (pia, width = 1600, height = 1100) =>
+  `https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia${pia.slice(3, 5)}/${pia.toLowerCase()}/${pia}.jpg?crop=faces%2Cfocalpoint&fit=clip&h=${height}&w=${width}`;
+
 const extraMissionMedia = {
   messenger: {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/MESSENGER.jpg',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/MESSENGER.jpg', alt: 'Conceito artístico da espaçonave MESSENGER orbitando Mercúrio', credit: 'NASA', kind: 'concept' }],
+    imageUrl: nasaPhoto('PIA11219'),
+    imageCredit: 'NASA/Johns Hopkins APL/Carnegie Institution of Washington',
+    gallery: [{ src: nasaPhoto('PIA11219'), alt: 'Imagem científica colorida da superfície craterada de Mercúrio obtida pela MESSENGER', credit: 'NASA/Johns Hopkins APL/Carnegie Institution of Washington', kind: 'photo', caption: 'As variações de cor ajudam a investigar a composição e a história geológica de Mercúrio.' }],
   },
   'mariner-10': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mariner10.jpg',
-    imageCredit: 'NASA/JPL',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mariner10.jpg', alt: 'Diagrama técnico da espaçonave Mariner 10 com seus instrumentos', credit: 'NASA/JPL', kind: 'diagram' }],
+    imageUrl: nasaPhoto('PIA00437', 1000, 1500),
+    imageCredit: 'NASA/JPL/USGS',
+    gallery: [{ src: nasaPhoto('PIA00437', 1000, 1500), alt: 'Primeira imagem de Mercúrio obtida pela Mariner 10 em 1974', credit: 'NASA/JPL/USGS', kind: 'photo', caption: 'A Mariner 10 revelou a superfície craterada de Mercúrio, antes pouco conhecida.' }],
   },
   veritas: {
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/06/veritas-blueprint-640.jpg?w=640',
-    imageCredit: 'NASA/JPL-Caltech',
-    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/06/veritas-blueprint-640.jpg?w=640', alt: 'Desenho técnico da espaçonave VERITAS', credit: 'NASA/JPL-Caltech', kind: 'concept' }],
+    imageUrl: nasaPhoto('PIA00478', 1200, 1200),
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: nasaPhoto('PIA00478', 1200, 1200), alt: 'Mapa global por radar da superfície de Vênus produzido pela missão Magellan', credit: 'NASA/JPL — Magellan', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · As nuvens de Vênus escondem sua superfície da luz visível. A VERITAS foi planejada para mapear o terreno por radar com muito mais detalhe.' }],
   },
   magellan: {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Magellan%20diagramm.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Magellan%20diagramm.png', alt: 'Diagrama técnico do orbitador Magellan', credit: 'NASA', kind: 'diagram' }],
-  },
-  dscovr: {
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/05/dscovr.png',
-    imageCredit: 'NASA/NOAA',
-    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/05/dscovr.png', alt: 'Ilustração oficial da espaçonave DSCOVR', credit: 'NASA/NOAA', kind: 'concept' }],
-  },
-  curiosity: {
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/05/curiosity.png',
-    imageCredit: 'NASA/JPL-Caltech',
-    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/05/curiosity.png', alt: 'Ilustração oficial do rover Curiosity', credit: 'NASA/JPL-Caltech', kind: 'concept' }],
-  },
-  galileo: {
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/05/galileo.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/05/galileo.png', alt: 'Ilustração oficial da espaçonave Galileo', credit: 'NASA', kind: 'concept' }],
-  },
-  juno: {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20spacecraft%20model%202.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20spacecraft%20model%202.png', alt: 'Ilustração oficial da espaçonave Juno em fundo transparente', credit: 'NASA', kind: 'concept' }],
-  },
-  'icesat-2': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png', alt: 'Ilustração oficial do satélite ICESat-2 em fundo transparente', credit: 'NASA', kind: 'concept' }],
-  },
-  'mars-odyssey': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Mars Odyssey', credit: 'NASA', kind: 'concept' }],
-  },
-  maven: {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/MAVEN%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/MAVEN%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave MAVEN', credit: 'NASA', kind: 'concept' }],
-  },
-  'voyager-1': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 1', credit: 'NASA', kind: 'concept' }],
-  },
-  'voyager-1-saturn': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 1, usada no sobrevoo de Saturno', credit: 'NASA', kind: 'concept' }],
-  },
-  'voyager-2-saturn': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 2', credit: 'NASA', kind: 'concept' }],
-  },
-  'pioneer-11': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20Saturn.jpg',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20Saturn.jpg', alt: 'Imagem de Saturno registrada durante a missão Pioneer 11', credit: 'NASA', kind: 'photo' }],
+    imageUrl: nasaPhoto('PIA00478', 1200, 1200),
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: nasaPhoto('PIA00478', 1200, 1200), alt: 'Mapa global por radar da superfície de Vênus obtido pela Magellan', credit: 'NASA/JPL', kind: 'photo', caption: 'O radar permitiu mapear a superfície de Vênus através de sua espessa cobertura de nuvens.' }],
   },
   'venus-express': {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20%2853672036164%29.png',
-    imageCredit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20%2853672036164%29.png', alt: 'Imagem científica da atmosfera de Vênus obtida pela missão Venus Express', credit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)', kind: 'photo' }],
+    imageUrl: nasaPhoto('PIA23791', 1200, 1000),
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: nasaPhoto('PIA23791', 1200, 1000), alt: 'Vênus envolto por sua densa camada global de nuvens, observado pela Mariner 10', credit: 'NASA/JPL-Caltech', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A Venus Express estudou a atmosfera, o clima e a perda atmosférica de Vênus; esta imagem mostra a camada de nuvens que torna essas investigações importantes.' }],
+  },
+  dscovr: {
+    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/86000/86257/epicfirstlight_DSC_2015186_lrg.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200',
+    imageCredit: 'NASA/NOAA EPIC',
+    gallery: [{ src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/86000/86257/epicfirstlight_DSC_2015186_lrg.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200', alt: 'Imagem real de todo o lado iluminado da Terra capturada pela câmera EPIC do DSCOVR', credit: 'NASA/NOAA EPIC', kind: 'photo', caption: 'A câmera EPIC observa o disco terrestre inteiro para acompanhar nuvens, aerossóis e mudanças na atmosfera.' }],
+  'icesat-2': {
+    imageUrl: nasaPhoto('PIA24990', 1200, 1450),
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: nasaPhoto('PIA24990', 1200, 1450), alt: 'Mapa científico das mudanças de elevação da camada de gelo da Antártida, incluindo dados de ICESat-2', credit: 'NASA/JPL-Caltech', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A missão mede a altura do gelo com laser para acompanhar mudanças nas geleiras e melhorar as estimativas sobre a elevação do nível do mar.' }],
+  },
+  curiosity: {
+    imageUrl: nasaPhoto('PIA16013', 1200, 1200),
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: nasaPhoto('PIA16013', 1200, 1200), alt: 'Primeira imagem da superfície de Marte feita pelas câmeras de navegação do rover Curiosity', credit: 'NASA/JPL-Caltech', kind: 'photo', caption: 'As imagens do terreno e das rochas ajudam a reconstruir o passado ambiental da Cratera Gale e avaliar se já houve condições habitáveis.' }],
   },
   mro: {
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter%20spacecraft%20model.png',
-    imageCredit: 'NASA',
-    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Mars Reconnaissance Orbiter', credit: 'NASA', kind: 'concept' }],
+    imageUrl: nasaPhoto('PIA08060', 1500, 1100),
+    imageCredit: 'NASA/JPL/University of Arizona',
+    gallery: [{ src: nasaPhoto('PIA08060', 1500, 1100), alt: 'Imagem da superfície de Marte obtida pela câmera HiRISE da Mars Reconnaissance Orbiter', credit: 'NASA/JPL/University of Arizona', kind: 'photo', caption: 'Imagens de alta resolução revelam camadas, canais e outras evidências da história geológica de Marte.' }],
+  },
+  'mars-odyssey': {
+    imageUrl: nasaPhoto('PIA03459', 1200, 1000),
+    imageCredit: 'NASA/JPL/Arizona State University',
+    gallery: [{ src: nasaPhoto('PIA03459', 1200, 1000), alt: 'Primeira imagem térmica de Marte obtida pela câmera THEMIS da Mars Odyssey', credit: 'NASA/JPL/Arizona State University', kind: 'photo', caption: 'A câmera térmica THEMIS ajuda a mapear minerais, temperaturas e características da superfície marciana.' }],
+  },
+  maven: {
+    imageUrl: nasaPhoto('PIA18613', 1400, 1000),
+    imageCredit: 'NASA/University of Colorado',
+    gallery: [{ src: nasaPhoto('PIA18613', 1400, 1000), alt: 'Visualização científica da atmosfera marciana escapando para o espaço, baseada em observações da MAVEN', credit: 'NASA/University of Colorado', kind: 'science', caption: 'A MAVEN investiga como a interação com o vento solar contribuiu para a perda de grande parte da atmosfera de Marte.' }],
+  },
+  juno: {
+    imageUrl: nasaPhoto('PIA26077', 1500, 1000),
+    imageCredit: 'NASA/JPL-Caltech/SwRI/MSSS',
+    gallery: [{ src: nasaPhoto('PIA26077', 1500, 1000), alt: 'Nuvens e faixas atmosféricas de Júpiter fotografadas pela JunoCam da missão Juno', credit: 'NASA/JPL-Caltech/SwRI/MSSS', kind: 'photo', caption: 'As estruturas nas nuvens ajudam a investigar a circulação atmosférica e a dinâmica interna de Júpiter.' }],
+  },
+  galileo: {
+    imageUrl: nasaPhoto('PIA00604', 1400, 1000),
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: nasaPhoto('PIA00604', 1400, 1000), alt: 'Mosaico fotográfico da região equatorial de Júpiter obtido pela Galileo', credit: 'NASA/JPL-Caltech', kind: 'photo', caption: 'A Galileo estudou a atmosfera de Júpiter e suas luas; as imagens ajudaram a revelar regiões atmosféricas complexas.' }],
+  },
+  'voyager-1': {
+    imageUrl: nasaPhoto('PIA01371', 1400, 1000),
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: nasaPhoto('PIA01371', 1400, 1000), alt: 'Júpiter fotografado pela Voyager 1 em janeiro de 1979', credit: 'NASA/JPL', kind: 'photo', caption: 'As observações próximas revelaram detalhes da atmosfera de Júpiter e atividade vulcânica na lua Io.' }],
+  },
+  'voyager-1-saturn': {
+    imageUrl: nasaPhoto('PIA00335', 1400, 1000),
+    imageCredit: 'NASA/JPL/USGS',
+    gallery: [{ src: nasaPhoto('PIA00335', 1400, 1000), alt: 'Saturno e seus anéis fotografados pela Voyager 1 em novembro de 1980', credit: 'NASA/JPL/USGS', kind: 'photo', caption: 'O sobrevoo estudou a estrutura dos anéis e a atmosfera do planeta, além de investigar a lua Titã.' }],
+  },
+  'voyager-2-saturn': {
+    imageUrl: nasaPhoto('PIA01376', 1200, 1200),
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: nasaPhoto('PIA01376', 1200, 1200), alt: 'Saturno fotografado pela Voyager 2 em agosto de 1981', credit: 'NASA/JPL', kind: 'photo', caption: 'A imagem revela padrões de nuvens e movimentos atmosféricos em Saturno.' }],
+  },
+  'pioneer-11': {
+    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia00/pia00025/PIA00025.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200',
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia00/pia00025/PIA00025.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200', alt: 'Saturno observado pela Voyager 1; imagem contextual sobre a exploração inicial do planeta', credit: 'NASA/JPL', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A Pioneer 11 foi a primeira espaçonave a visitar Saturno e estudar seus anéis, atmosfera e magnetosfera.' }],
   },
   dragonfly: {
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/06/header-whatdragonfly.png',
-    imageCredit: 'NASA/Johns Hopkins APL',
-    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/06/header-whatdragonfly.png', alt: 'Conceito artístico da missão Dragonfly sobre a superfície de Titã', credit: 'NASA/Johns Hopkins APL', kind: 'concept' }],
+    imageUrl: nasaPhoto('PIA06438', 1400, 1200),
+    imageCredit: 'ESA/NASA/JPL/University of Arizona',
+    gallery: [{ src: nasaPhoto('PIA06438', 1400, 1200), alt: 'Panorama real da superfície de Titã capturado pela sonda Huygens, destino da futura missão Dragonfly', credit: 'ESA/NASA/JPL/University of Arizona', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · Como a Dragonfly ainda é uma missão futura, esta imagem real de Titã mostra o ambiente que ela investigará em busca de química pré-biótica e condições habitáveis.' }],
   },
 };
 
