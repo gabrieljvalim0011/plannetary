@@ -228,7 +228,7 @@ export const missionCatalog = Object.fromEntries(
     // as reference imagery rather than implying it depicts the selected craft.
     const referenceGallery = (featured.gallery || []).map((image) => ({
       ...image,
-      alt: `Imagem de referência do sistema de ${featured.target}; não representa necessariamente ${featured.name}.`,
+      alt: `Imagem de referência do sistema de ${featured.target}; não representa necessariamente a espaçonave selecionada.`,
       kind: 'reference',
     }));
     const missions = (extraMissions[planetId] || []).map((mission) => {
