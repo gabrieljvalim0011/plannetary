@@ -153,6 +153,7 @@ export default function MoonMissions() {
                   <p className="moon-mission-kicker">{selectedMission.type}</p>
                   <h3>{selectedMission.name}</h3>
                   <p className="moon-mission-objective">{selectedMission.objective}</p>
+                  {selectedMission.note ? <p className="moon-mission-objective moon-mission-note">{selectedMission.note}</p> : null}
 
                   <div className="moon-mission-meta">
                     <span>{selectedMission.target}</span>
