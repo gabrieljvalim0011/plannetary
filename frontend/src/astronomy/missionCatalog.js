@@ -222,6 +222,26 @@ export const missionCatalog = Object.fromEntries(
       category: featured.status?.toLowerCase().includes('futura') ? 'future' : featured.status?.toLowerCase().includes('histórica') || featured.status?.toLowerCase().includes('concluída') ? 'historical' : 'active',
       ...featured,
     };
-    return [planetId, [featuredMission, ...(extraMissions[planetId] || [])]];
+
+    // Older catalog entries have mission facts but no dedicated media. Keep the
+    // panel visual instead of rendering an empty frame, and label this honestly
+    // as reference imagery rather than implying it depicts the selected craft.
+    const referenceGallery = (featured.gallery || []).map((image) => ({
+      ...image,
+      alt: `Imagem de referência do sistema de ${featured.target}; não representa necessariamente ${featured.name}.`,
+      kind: 'reference',
+    }));
+    const missions = (extraMissions[planetId] || []).map((mission) => {
+      if (mission.gallery?.length || mission.imageUrl) return mission;
+      if (!referenceGallery.length) return mission;
+      return {
+        ...mission,
+        gallery: referenceGallery,
+        imageCredit: featured.imageCredit,
+        imageReferenceOnly: true,
+      };
+    });
+
+    return [planetId, [featuredMission, ...missions]];
   })
 );
