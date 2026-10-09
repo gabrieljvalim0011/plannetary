@@ -215,6 +215,100 @@ const extraMissions = {
   netuno: [],
 };
 
+
+const extraMissionMedia = {
+  messenger: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/MESSENGER.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/MESSENGER.jpg', alt: 'Conceito da espaçonave MESSENGER em órbita de Mercúrio', credit: 'NASA', kind: 'concept' }],
+  },
+  'mariner-10': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mariner10.jpg',
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mariner10.jpg', alt: 'Diagrama da espaçonave Mariner 10 e seus instrumentos', credit: 'NASA/JPL', kind: 'photo' }],
+  },
+  veritas: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Veritas20150930%20(cropped).jpg',
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Veritas20150930%20(cropped).jpg', alt: 'Conceito artístico da espaçonave VERITAS para estudar Vênus', credit: 'NASA/JPL-Caltech', kind: 'concept' }],
+  },
+  magellan: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Magellan%20diagramm.png',
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Magellan%20diagramm.png', alt: 'Diagrama da espaçonave Magellan, orbitador de Vênus', credit: 'NASA/JPL', kind: 'photo' }],
+  },
+  'venus-express': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20(53672036164).png',
+    imageCredit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Venus%20-%20ESA%20Venus%20Express%20(53672036164).png', alt: 'Imagem relacionada à missão europeia Venus Express', credit: 'ESA/DLR/VMC/Andrea Luck (CC BY 2.0)', kind: 'photo' }],
+  },
+  dscovr: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/DSCOVR%20spacecraft%20model.png',
+    imageCredit: 'NOAA/NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/DSCOVR%20spacecraft%20model.png', alt: 'Conceito da espaçonave DSCOVR', credit: 'NOAA/NASA', kind: 'concept' }],
+  },
+  'icesat-2': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png', alt: 'Modelo da espaçonave ICESat-2 em fundo transparente', credit: 'NASA', kind: 'concept' }],
+  },
+  curiosity: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Curiosity%20Mars%20Science%20Laboratory%20Rover.jpg',
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Curiosity%20Mars%20Science%20Laboratory%20Rover.jpg', alt: 'Rover Curiosity durante testes de preparação na NASA/JPL', credit: 'NASA/JPL-Caltech', kind: 'photo' }],
+  },
+  mro: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter.jpg',
+    imageCredit: 'NASA/JPL/Corby Waste',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Reconnaissance%20Orbiter.jpg', alt: 'Conceito artístico do Mars Reconnaissance Orbiter sobre Marte', credit: 'NASA/JPL/Corby Waste', kind: 'concept' }],
+  },
+  'mars-odyssey': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png',
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png', alt: 'Modelo da espaçonave Mars Odyssey em configuração de missão', credit: 'NASA/JPL', kind: 'concept' }],
+  },
+  maven: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/The%20MAVEN%20spacecraft%20and%20the%20limb%20of%20Mars.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/The%20MAVEN%20spacecraft%20and%20the%20limb%20of%20Mars.jpg', alt: 'Conceito da espaçonave MAVEN junto ao horizonte de Marte', credit: 'NASA', kind: 'concept' }],
+  },
+  juno: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20in%20front%20of%20Jupiter.jpg',
+    imageCredit: 'NASA/JPL-Caltech',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20in%20front%20of%20Jupiter.jpg', alt: 'Conceito artístico da sonda Juno diante de Júpiter', credit: 'NASA/JPL-Caltech', kind: 'concept' }],
+  },
+  galileo: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Galileo%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Galileo%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Galileo', credit: 'NASA', kind: 'concept' }],
+  },
+  'voyager-1': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Modelo da espaçonave Voyager em configuração de missão', credit: 'NASA', kind: 'concept' }],
+  },
+  'voyager-1-saturn': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager1.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager1.jpg', alt: 'Imagem da espaçonave Voyager 1', credit: 'NASA', kind: 'photo' }],
+  },
+  'voyager-2-saturn': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager2.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager2.jpg', alt: 'Imagem da espaçonave Voyager 2', credit: 'NASA', kind: 'photo' }],
+  },
+  'pioneer-11': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20f16.gif',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20f16.gif', alt: 'Imagem de Saturno obtida durante a missão Pioneer 11', credit: 'NASA', kind: 'photo' }],
+  },
+  dragonfly: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/NASA%20Dragonfly%20mission%20to%20Titan.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/NASA%20Dragonfly%20mission%20to%20Titan.jpg', alt: 'Conceito da missão Dragonfly voando sobre a superfície de Titã', credit: 'NASA', kind: 'concept' }],
+  },
+};
+
 export const missionCatalog = Object.fromEntries(
   Object.entries(missionHighlights).map(([planetId, featured]) => {
     const featuredMission = {
@@ -225,6 +319,6 @@ export const missionCatalog = Object.fromEntries(
 
     // Do not reuse the featured mission's gallery for other spacecraft.
     // Each mission must display its own media, or the panel's explicit no-image state.
-    return [planetId, [featuredMission, ...(extraMissions[planetId] || [])]];
+    return [planetId, [featuredMission, ...(extraMissions[planetId] || []).map((mission) => ({ ...mission, ...(extraMissionMedia[mission.id] || {}) }))]];
   })
 );
