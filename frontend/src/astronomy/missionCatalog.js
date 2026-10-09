@@ -252,6 +252,11 @@ const extraMissionMedia = {
     imageCredit: 'NASA',
     gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/05/galileo.png', alt: 'Ilustração oficial da espaçonave Galileo', credit: 'NASA', kind: 'concept' }],
   },
+  juno: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20spacecraft%20model%202.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Juno%20spacecraft%20model%202.png', alt: 'Ilustração oficial da espaçonave Juno em fundo transparente', credit: 'NASA', kind: 'concept' }],
+  },
   'icesat-2': {
     imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png',
     imageCredit: 'NASA',
