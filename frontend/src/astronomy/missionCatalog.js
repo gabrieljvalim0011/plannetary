@@ -165,6 +165,17 @@ const extraMissions = {
       timeline: ['1977 · lançamento', '1979 · encontro com Júpiter'],
     },
   ],
+    {
+      id: 'voyager-2-jupiter', name: 'Voyager 2', status: 'Histórica · sobrevoo 1979', category: 'historical', type: 'Sobrevoo planetário',
+      target: 'Júpiter', partners: 'NASA / JPL', launch: '20 ago. 1977', milestone: 'Sobrevoo: 9 jul. 1979', location: 'Júpiter e suas luas',
+      objective: 'Complementar as observações de Júpiter e investigar sua atmosfera, anéis e sistema de luas.',
+      sourceUrl: 'https://science.nasa.gov/mission/voyager/voyager-2/', sourceLabel: 'NASA Science',
+      spacecraft: 'Voyager 2', instruments: '10 instrumentos científicos',
+      overview: 'Voyager 2 passou por Júpiter em julho de 1979 e obteve imagens e medições independentes, incluindo observações de Io e da atmosfera joviana.',
+      science: ['Atmosfera e tempestades', 'Anéis de Júpiter', 'Vulcanismo de Io', 'Luas e magnetosfera'],
+      highlights: ['Segundo sobrevoo Voyager de Júpiter', 'Observou Io e suas erupções vulcânicas', 'Seguiu depois para Saturno em 1981'],
+      timeline: ['1977 · lançamento', '1979 · encontro com Júpiter', '1981 · encontro com Saturno'],
+    },
   saturno: [
     {
       id: 'voyager-1-saturn', name: 'Voyager 1', status: 'Histórica · sobrevoo 1980', category: 'historical', type: 'Sobrevoo planetário',
@@ -288,6 +299,11 @@ const extraMissionMedia = {
     imageUrl: nasaPhoto('PIA01371', 1400, 1000),
     imageCredit: 'NASA/JPL',
     gallery: [{ src: nasaPhoto('PIA01371', 1400, 1000), alt: 'Júpiter fotografado pela Voyager 1 em janeiro de 1979', credit: 'NASA/JPL', kind: 'photo', caption: 'As observações próximas revelaram detalhes da atmosfera de Júpiter e atividade vulcânica na lua Io.' }],
+  },
+  'voyager-2-jupiter': {
+    imageUrl: nasaPhoto('PIA01369', 1200, 1200),
+    imageCredit: 'NASA/JPL',
+    gallery: [{ src: nasaPhoto('PIA01369', 1200, 1200), alt: 'Júpiter fotografado pela Voyager 2 em 29 de junho de 1979', credit: 'NASA/JPL', kind: 'photo', caption: 'Imagem real obtida pela Voyager 2 durante sua aproximação de Júpiter; as faixas e os ovais revelam a dinâmica da atmosfera.' }],
   },
   'voyager-1-saturn': {
     imageUrl: nasaPhoto('PIA00335', 1400, 1000),
