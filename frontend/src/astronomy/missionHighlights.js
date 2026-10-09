@@ -48,11 +48,10 @@ export const missionHighlights = {
     science: ['Cobertura vegetal e agricultura', 'Água e qualidade ambiental', 'Mudanças de uso e cobertura da terra', 'Temperatura da superfície'],
     highlights: ['Resolução temporal nominal de 16 dias', 'Mais de 700 cenas por dia', 'Resolução espacial de até 15 m no pancromático', 'Parceria operacional NASA–USGS'],
     timeline: ['2021 · lançamento', '2021–presente · operação e aquisição de dados', '16 dias · ciclo nominal de repetição'],
-    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/missions/landsat/landsat-9-mission-page/KSC-20210927-PH-KLS03_0018~orig.jpg?crop=faces%2Cfocalpoint&fit=clip&h=2592&w=3872',
-    imageCredit: 'NASA/Kim Shiflett',
+    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/86000/86257/epicfirstlight_DSC_2015186_lrg.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200',
+    imageCredit: 'NASA/NOAA EPIC — imagem contextual da Terra',
     gallery: [
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/missions/landsat/landsat-9-mission-page/KSC-20210927-PH-KLS03_0018~orig.jpg?crop=faces%2Cfocalpoint&fit=clip&h=2592&w=3872', alt: 'Lançamento do Landsat 9', credit: 'NASA/Kim Shiflett', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/missions/landsat/2023/09/L9-Stills-Cover-3.png?crop=faces%2Cfocalpoint&fit=clip&h=2160&w=3840', alt: 'Landsat 9 em órbita sobre a Terra', credit: 'NASA/Matt Radcliff', kind: 'photo' },
+      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/86000/86257/epicfirstlight_DSC_2015186_lrg.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200', alt: 'Imagem real do disco terrestre inteiro capturada pela câmera EPIC do DSCOVR', credit: 'NASA/NOAA EPIC', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · O Landsat 9 não fotografa o globo inteiro de uma vez: ele registra cenas detalhadas da superfície para acompanhar vegetação, água, gelo, agricultura e mudanças ambientais.' },
     ],
   },
   marte: {
