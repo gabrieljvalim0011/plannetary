@@ -252,6 +252,46 @@ const extraMissionMedia = {
     imageCredit: 'NASA',
     gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/05/galileo.png', alt: 'Ilustração oficial da espaçonave Galileo', credit: 'NASA', kind: 'concept' }],
   },
+  'icesat-2': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/ICESat-2%20spacecraft%20model.png', alt: 'Ilustração oficial do satélite ICESat-2 em fundo transparente', credit: 'NASA', kind: 'concept' }],
+  },
+  'mars-odyssey': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mars%20Odyssey%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Mars Odyssey', credit: 'NASA', kind: 'concept' }],
+  },
+  maven: {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/MAVEN%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/MAVEN%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave MAVEN', credit: 'NASA', kind: 'concept' }],
+  },
+  'voyager-1': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 1', credit: 'NASA', kind: 'concept' }],
+  },
+  'voyager-1-saturn': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 1, usada no sobrevoo de Saturno', credit: 'NASA', kind: 'concept' }],
+  },
+  'voyager-2-saturn': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Voyager%20spacecraft%20model.png', alt: 'Conceito artístico da espaçonave Voyager 2', credit: 'NASA', kind: 'concept' }],
+  },
+  'pioneer-11': {
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20Saturn.jpg',
+    imageCredit: 'NASA',
+    gallery: [{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pioneer%2011%20Saturn.jpg', alt: 'Imagem de Saturno registrada durante a missão Pioneer 11', credit: 'NASA', kind: 'photo' }],
+  },
+  dragonfly: {
+    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/06/header-whatdragonfly.png',
+    imageCredit: 'NASA/Johns Hopkins APL',
+    gallery: [{ src: 'https://science.nasa.gov/wp-content/uploads/2023/06/header-whatdragonfly.png', alt: 'Conceito artístico da missão Dragonfly sobre a superfície de Titã', credit: 'NASA/Johns Hopkins APL', kind: 'concept' }],
+  },
 };
 
 export const missionCatalog = Object.fromEntries(
