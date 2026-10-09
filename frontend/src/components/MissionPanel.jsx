@@ -339,7 +339,7 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
               <div className="mission-visual-caption">
                 <span>MISSÃO · {planet.name.toUpperCase()}</span>
                 <strong>{selectedMission.name}</strong>
-                <small className="mission-media-kind">{selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage ? 'IMAGEM DA MISSÃO' : 'IMAGEM ESPECÍFICA INDISPONÍVEL'}</small>
+                <small className="mission-media-kind">{selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage?.kind === 'diagram' ? 'DIAGRAMA TÉCNICO' : selectedImage ? 'IMAGEM CIENTÍFICA' : 'IMAGEM ESPECÍFICA INDISPONÍVEL'}</small>
                 {gallery.length > 1 ? <small>{imageIndex + 1} / {gallery.length} imagens</small> : null}
               </div>
             </div>
