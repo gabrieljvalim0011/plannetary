@@ -27,15 +27,15 @@ const extraMissions = {
   ],
   venus: [
     {
-      id: 'veritas', name: 'VERITAS', status: 'Futura', category: 'future', type: 'Orbitador',
-      target: 'Vênus', partners: 'NASA / JPL', launch: 'Futura', milestone: 'Missão aprovada para desenvolvimento', location: 'Órbita de Vênus',
+      id: 'veritas', name: 'VERITAS', status: 'Futura · desenvolvimento', category: 'future', type: 'Orbitador',
+      target: 'Vênus', partners: 'NASA / JPL', launch: 'Não antes de 2031', milestone: 'Data de lançamento sujeita ao cronograma oficial', location: 'Órbita de Vênus',
       objective: 'Mapear a superfície de Vênus em alta resolução e investigar sua geologia, história e atividade.',
       sourceUrl: 'https://science.nasa.gov/mission/veritas/overview/', sourceLabel: 'NASA Science',
       spacecraft: 'VERITAS', instruments: 'Radar e espectrômetro de emissão térmica',
       overview: 'VERITAS pretende construir mapas globais de alta resolução para entender como Vênus se tornou tão diferente da Terra.',
       science: ['Geologia global', 'Deformação tectônica', 'História vulcânica', 'Interior de Vênus'],
       highlights: ['Mapeamento global de alta resolução', 'Estudo da atividade geológica e vulcânica', 'Comparação entre Vênus e a Terra'],
-      timeline: ['Futuro · desenvolvimento', 'Futuro · lançamento', 'Futuro · inserção orbital e mapeamento'],
+      timeline: ['Desenvolvimento e preparação dos instrumentos', 'Não antes de 2031 · lançamento planejado', 'Após a chegada · inserção orbital e mapeamento de Vênus'],
     },
     {
       id: 'magellan', name: 'Magellan', status: 'Histórica · 1989–1994', category: 'historical', type: 'Orbitador',
