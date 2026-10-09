@@ -30,11 +30,11 @@ export const missionHighlights = {
     science: ['Composição química da atmosfera', 'Temperatura, pressão e ventos durante a descida', 'Composição da superfície em Alpha Regio', 'Evolução climática e geológica de Vênus'],
     highlights: ['Primeira missão da NASA dedicada a medir Vênus da alta atmosfera à superfície em uma única campanha', 'Sonda fará medições in situ durante a descida', 'Alpha Regio é alvo de imagens e análises de superfície'],
     timeline: ['Planejamento · missão futura', 'Cruzeiro e sobrevoos de Vênus', 'Descida atmosférica da sonda', 'Medições finais próximas à superfície'],
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2023/06/davinci-probe-descending-1920x640-1.jpg?w=1536',
-    imageCredit: 'NASA',
+    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia00/pia00478/PIA00478.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200',
+    imageCredit: 'NASA/JPL — dados de radar da missão Magellan',
     gallery: [
-      { src: 'https://science.nasa.gov/wp-content/uploads/2023/06/davinci-probe-descending-1920x640-1.jpg?w=1536', alt: 'Conceito da sonda DAVINCI descendo na atmosfera de Vênus', credit: 'NASA', kind: 'concept' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5912/davincinadirprobealpha-640.jpg?crop=faces%2Cfocalpoint&fit=clip&h=480&w=640', alt: 'Conceito da sonda DAVINCI sobre a superfície de Vênus', credit: 'NASA', kind: 'concept' },
+      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia00/pia00478/PIA00478.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1200', alt: 'Mapa real por radar da superfície de Vênus produzido pela Magellan', credit: 'NASA/JPL — Magellan', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A DAVINCI ainda não visitou Vênus. Esta imagem real mostra a superfície escondida sob as nuvens; a missão investigará a composição da atmosfera e a geologia de Alpha Regio.' },
+      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia23/pia23791/PIA23791.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1000&w=1200', alt: 'Vênus envolto por uma camada global de nuvens, fotografado pela Mariner 10', credit: 'NASA/JPL-Caltech', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A densa atmosfera é um dos principais motivos para estudar Vênus com medições durante a descida.' },
     ],
   },
   terra: {
@@ -86,13 +86,11 @@ export const missionHighlights = {
     science: ['Estrutura da crosta de gelo', 'Oceano subsuperficial', 'Composição e química de Europa', 'Geologia e potencial habitável'],
     highlights: ['Primeira missão dedicada a uma investigação científica detalhada de Europa', 'Quase 50 sobrevoos próximos planejados', 'Conjunto de 9 instrumentos científicos', 'Pode voar a cerca de 25 km da superfície em passagens selecionadas'],
     timeline: ['2024 · lançamento', '2030 · chegada ao sistema de Júpiter', 'Após chegada · campanha de sobrevoos de Europa'],
-    imageUrl: 'https://science.nasa.gov/wp-content/uploads/2024/10/europa-clipper-as-it-lifts-off.jpg',
-    imageCredit: 'SpaceX / NASA',
+    imageUrl: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia19/pia19048/PIA19048.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1600',
+    imageCredit: 'NASA/JPL-Caltech/SETI Institute — imagens da missão Galileo',
     gallery: [
-      { src: 'https://science.nasa.gov/wp-content/uploads/2024/10/europa-clipper-as-it-lifts-off.jpg', alt: 'Lançamento da Europa Clipper a bordo de um Falcon Heavy', credit: 'SpaceX / NASA', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/09/ksc-20240821-ph-fmx01-0002large.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1920&w=1280', alt: 'Europa Clipper em preparação para o lançamento', credit: 'NASA', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/07/pia19048-europa-stunning-surface.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1700&w=2300', alt: 'Superfície de Europa em alta resolução', credit: 'NASA/JPL-Caltech', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia20/pia20025/PIA20025.jpg?crop=faces%2Cfocalpoint&fit=clip&h=7352&w=8352', alt: 'Conceito artístico da Europa Clipper sobrevoando Europa', credit: 'NASA/JPL-Caltech', kind: 'concept' },
+      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia19/pia19048/PIA19048.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1600', alt: 'Imagem em cores naturais aproximadas da superfície gelada de Europa obtida pela missão Galileo', credit: 'NASA/JPL-Caltech/SETI Institute', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A Europa Clipper ainda está a caminho de Júpiter. As fraturas e regiões alteradas da superfície de Europa ajudam a investigar a possibilidade de um oceano sob o gelo.' },
+      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia25/pia25499/PIA25499.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1200&w=1600', alt: 'Detalhes de falhas e regiões lisas na crosta gelada de Europa, registrados pela Galileo', credit: 'NASA/JPL-Caltech', kind: 'science', caption: 'CONTEXTO CIENTÍFICO · A missão vai mapear a crosta, a composição e indícios de atividade relacionados ao possível oceano subterrâneo.' },
     ],
   },
   saturno: {
