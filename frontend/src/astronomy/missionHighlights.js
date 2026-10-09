@@ -16,7 +16,6 @@ export const missionHighlights = {
       { src: 'https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2021/10/bepicolombo_meets_mercury/23493061-1-eng-GB/BepiColombo_meets_Mercury_pillars.png', alt: 'Mercúrio visto pela BepiColombo durante um sobrevoo', credit: 'ESA/BepiColombo/MTM', kind: 'photo' },
       { src: 'https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2025/01/best_images_from_bepicolombo_s_sixth_mercury_flyby/26527094-1-eng-GB/Best_images_from_BepiColombo_s_sixth_Mercury_flyby_pillars.jpg', alt: 'Imagens do sexto sobrevoo de Mercúrio pela BepiColombo', credit: 'ESA/BepiColombo/MTM', kind: 'photo' },
       { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia11/pia11406/PIA11406.jpg?crop=faces%2Cfocalpoint&fit=clip&h=486&w=720', alt: 'Mercúrio em composição de cores obtida pela MESSENGER', credit: 'NASA/Johns Hopkins APL/Carnegie Institution of Washington', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/BepiColombo_Cruise_configuration_1280.jpg?crop=faces%2Cfocalpoint&fit=clip&h=720&w=1280', alt: 'Conceito da configuração de cruzeiro da BepiColombo', credit: 'ESA/BepiColombo/MTM', kind: 'concept' },
     ],
   },
   venus: {
@@ -70,8 +69,6 @@ export const missionHighlights = {
     gallery: [
       { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/6093/PIA25681.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1122&w=1200', alt: 'Perseverance na Cratera Jezero', credit: 'NASA/JPL-Caltech/MSSS', kind: 'photo' },
       { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia24/pia24487/PIA24487.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1920&w=2560', alt: 'Perseverance durante seu primeiro deslocamento em Marte', credit: 'NASA/JPL-Caltech', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia26/pia26344/PIA26344.jpg?crop=faces%2Cfocalpoint&fit=clip&h=7458&w=10502', alt: 'Selfie da Perseverance com Cheyava Falls', credit: 'NASA/JPL-Caltech/MSSS', kind: 'photo' },
-      { src: 'https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/downloadable_items/4/6/46597_PIA24836-Perseverance_Selfie_at_Rochette-Figure_1.jpg?crop=faces%2Cfocalpoint&fit=clip&h=11757&w=9982', alt: 'Selfie da Perseverance em Marte', credit: 'NASA/JPL-Caltech/MSSS', kind: 'photo' },
     ],
   },
   jupiter: {
