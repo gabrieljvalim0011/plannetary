@@ -338,8 +338,9 @@ export default function MissionPanel({ planet, planets = [], selectedPlanetId, o
               ) : <div className="mission-image-placeholder"><span>Imagem da missão</span><strong>Consulte a fonte oficial para o acervo visual disponível.</strong></div>}
               <div className="mission-visual-caption">
                 <span>MISSÃO · {planet.name.toUpperCase()}</span>
-                <strong>{selectedMission.name}</strong>
-                <small className="mission-media-kind">{selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage?.kind === 'diagram' ? 'DIAGRAMA TÉCNICO' : selectedImage ? 'IMAGEM CIENTÍFICA' : 'IMAGEM ESPECÍFICA INDISPONÍVEL'}</small>
+                <strong>{selectedImage?.caption?.startsWith('CONTEXTO CIENTÍFICO') ? 'Contexto científico da missão' : selectedImage?.alt || selectedMission.name}</strong>
+                {selectedImage?.caption ? <small className="mission-media-description">{selectedImage.caption.replace('CONTEXTO CIENTÍFICO · ', '')}</small> : null}
+                <small className="mission-media-kind">{selectedImage?.kind === 'concept' ? 'CONCEITO ARTÍSTICO' : selectedImage?.kind === 'diagram' ? 'DIAGRAMA TÉCNICO' : selectedImage?.kind === 'science' ? 'CONTEXTO CIENTÍFICO' : selectedImage ? 'IMAGEM REAL / DADO CIENTÍFICO' : 'IMAGEM ESPECÍFICA INDISPONÍVEL'}</small>
                 {gallery.length > 1 ? <small>{imageIndex + 1} / {gallery.length} imagens</small> : null}
               </div>
             </div>
